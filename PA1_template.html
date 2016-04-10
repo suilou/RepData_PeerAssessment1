@@ -2,15 +2,19 @@
 
 <p>rm( list = ls() )</p>
 
-<p>data &lt;- read.csv(&#39;data/activity.csv&#39;)
-head(data)
-str(data)</p>
+<p>data &lt;- read.csv(&#39;data/activity.csv&#39;)</p>
+
+<p>head(data)</p>
+
+<p>str(data)</p>
 
 <h4>check missing values</h4>
 
-<p>summary(data$steps) 
-summary(data$interval) 
-summary(data$date) </p>
+<p>summary(data$steps) </p>
+
+<p>summary(data$interval) </p>
+
+<p>summary(data$date) </p>
 
 <h2>What is mean total number of steps taken per day?</h2>
 
@@ -18,9 +22,11 @@ summary(data$date) </p>
 
 <p>daySum &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(date=data$date[!is.na(data$steps)]), 
-                     FUN=sum)
-head(daySum)
-str(daySum)</p>
+                     FUN=sum)</p>
+
+<p>head(daySum)</p>
+
+<p>str(daySum)</p>
 
 <h3>2b. Make a histogram of the total number of steps taken each day</h3>
 
@@ -31,11 +37,14 @@ str(daySum)</p>
 
 <h4>save plot</h4>
 
-<p>png(file=&ldquo;Proj1_fig1.png&rdquo;, width=480, height=480)
-hist(daySum$x, main=&ldquo;Distribution of Daily Total Steps&rdquo;,
-     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)
-dev.off()
-dev.cur()</p>
+<p>png(file=&ldquo;Proj1_fig1.png&rdquo;, width=480, height=480)</p>
+
+<p>hist(daySum$x, main=&ldquo;Distribution of Daily Total Steps&rdquo;,
+     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
+
+<p>dev.off()</p>
+
+<p>dev.cur()</p>
 
 <h3>2c. Calculate and report the mean and median of the total number of steps taken per day</h3>
 
@@ -45,13 +54,15 @@ dev.cur()</p>
 
 <h4>Median = 10500</h4>
 
-<p>dailyMeanSteps &lt;- mean(daySum$x, rm.na=TRUE)
-dailyMeanSteps</p>
+<p>dailyMeanSteps &lt;- mean(daySum$x, rm.na=TRUE)</p>
+
+<p>dailyMeanSteps</p>
 
 <h4>Mean = 9354.23</h4>
 
-<p>dailyMedianSteps &lt;- median(daySum$x, rm.na=TRUE)
-dailyMedianSteps</p>
+<p>dailyMedianSteps &lt;- median(daySum$x, rm.na=TRUE)</p>
+
+<p>dailyMedianSteps</p>
 
 <h4>Median = 10395</h4>
 
@@ -61,14 +72,19 @@ dailyMedianSteps</p>
 
 <h3>3a. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</h3>
 
-<p>summary(data$interval)
-summary(data$steps)
-myMean &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
+<p>summary(data$interval)</p>
+
+<p>summary(data$steps)</p>
+
+<p>myMean &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(interval=data$interval[!is.na(data$steps)]), 
-                     FUN=mean )
-head(myMean)
-str(myMean)
-summary(myMean$x)</p>
+                     FUN=mean )</p>
+
+<p>head(myMean)</p>
+
+<p>str(myMean)</p>
+
+<p>summary(myMean$x)</p>
 
 <h4>plot on screen</h4>
 
@@ -78,12 +94,15 @@ summary(myMean$x)</p>
 
 <h4>save plot</h4>
 
-<p>png(file=&ldquo;Proj1_fig2.png&rdquo;, width=480, height=480)
-plot(x=myMean$interval, y=myMean$x, type=&ldquo;l&rdquo;, 
+<p>png(file=&ldquo;Proj1_fig2.png&rdquo;, width=480, height=480)</p>
+
+<p>plot(x=myMean$interval, y=myMean$x, type=&ldquo;l&rdquo;, 
      main=&ldquo;Mean Number of Steps in 5-Minutes&rdquo;, 
-     xlab = &ldquo;Interval&rdquo;, ylab=&ldquo;Mean Steps&rdquo;)
-dev.off()
-dev.cur()</p>
+     xlab = &ldquo;Interval&rdquo;, ylab=&ldquo;Mean Steps&rdquo;)</p>
+
+<p>dev.off()</p>
+
+<p>dev.cur()</p>
 
 <h3>3b. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h3>
 
@@ -119,19 +138,25 @@ dev.cur()</p>
 
 <h3>4c. Create a new dataset that is equal to the original dataset but with the missing data filled in.</h3>
 
-<p>dMean &lt;- rep(daySum$x/(24*12), each=24*12)
-data1 &lt;- data
-data1$steps[is.na(data$steps)] &lt;- dMean[is.na(data$steps)]
-summary(data1$steps)</p>
+<p>dMean &lt;- rep(daySum$x/(24*12), each=24*12)</p>
+
+<p>data1 &lt;- data</p>
+
+<p>data1$steps[is.na(data$steps)] &lt;- dMean[is.na(data$steps)]</p>
+
+<p>summary(data1$steps)</p>
 
 <h3>4d. Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</h3>
 
 <p>daySum1 &lt;- aggregate( x=data1$steps, 
                      by=list(date=data1$date), 
-                     FUN=sum )
-head(daySum1)
-str(daySum1)
-summary(daySum1$x)</p>
+                     FUN=sum )</p>
+
+<p>head(daySum1)</p>
+
+<p>str(daySum1)</p>
+
+<p>summary(daySum1$x)</p>
 
 <h4>plot on screen</h4>
 
@@ -140,11 +165,14 @@ summary(daySum1$x)</p>
 
 <h4>save plot</h4>
 
-<p>png(file=&ldquo;Proj1_fig3.png&rdquo;, width=480, height=480)
-hist(daySum1$x, main=&ldquo;Distribution of Daily Total Steps\n(Missing Values Imputed)&rdquo;,
-     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)
-dev.off()
-dev.cur()</p>
+<p>png(file=&ldquo;Proj1_fig3.png&rdquo;, width=480, height=480)</p>
+
+<p>hist(daySum1$x, main=&ldquo;Distribution of Daily Total Steps\n(Missing Values Imputed)&rdquo;,
+     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
+
+<p>dev.off()</p>
+
+<p>dev.cur()</p>
 
 <h3>It appears that imputation of missing values with mean steps of the day has no visible effect on the distribution, nor the mean and median. This is probably due to the nature of the missing values in the dataset, which likely occur only on certain days. Note that this result is strategy-dependent.</h3>
 
@@ -153,44 +181,61 @@ dev.cur()</p>
 <h3>5a. Create a new factor variable in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day.</h3>
 
 <p>tf = is.member(weekdays(as.Date(data1$date)), c(&ldquo;Monday&rdquo;,&ldquo;Tuesday&rdquo;, 
-                                            &ldquo;Wednesday&rdquo;,&ldquo;Thursday&rdquo;,&ldquo;Friday&rdquo;) )
-table(tf)
-str(tf)
-sum(tf(tf==1))</p>
+                                            &ldquo;Wednesday&rdquo;,&ldquo;Thursday&rdquo;,&ldquo;Friday&rdquo;) )</p>
 
-<p>F &lt;- factor(tf)
-levels(F)[levels(F)==&ldquo;FALSE&rdquo;] &lt;- &ldquo;weekend&rdquo;
-levels(F)[levels(F)==&ldquo;TRUE&rdquo;] &lt;- &ldquo;weekday&rdquo;
-str(F)
-head(F)
-data1$F &lt;- F
-str(data1)
-head(data1)</p>
+<p>table(tf)</p>
+
+<p>str(tf)</p>
+
+<p>sum(tf(tf==1))</p>
+
+<p>F &lt;- factor(tf)</p>
+
+<p>levels(F)[levels(F)==&ldquo;FALSE&rdquo;] &lt;- &ldquo;weekend&rdquo;</p>
+
+<p>levels(F)[levels(F)==&ldquo;TRUE&rdquo;] &lt;- &ldquo;weekday&rdquo;</p>
+
+<p>str(F)</p>
+
+<p>head(F)</p>
+
+<p>data1$F &lt;- F</p>
+
+<p>str(data1)</p>
+
+<p>head(data1)</p>
 
 <h3>5b. Make a panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo;) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</h3>
 
-<p>myMean2 &lt;- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )
-str(myMean2)
-head(myMean2)
-tapply(myMean2$steps, myMean2$F, summary)</p>
+<p>myMean2 &lt;- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )</p>
+
+<p>str(myMean2)</p>
+
+<p>head(myMean2)</p>
+
+<p>tapply(myMean2$steps, myMean2$F, summary)</p>
 
 <h4>plot on screen</h4>
 
-<p>library(ggplot2)
-ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+<p>library(ggplot2)</p>
+
+<p>ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
   labs(x=&ldquo;Interval&rdquo;)+labs(y=&ldquo;Mean steps&rdquo;)+
   labs(title=&ldquo;Activity Patterns&rdquo;)+
   facet_wrap(~F, ncol=1)</p>
 
 <h4>save plot</h4>
 
-<p>png(file=&ldquo;Proj1_fig4.png&rdquo;, width=480, height=480)
-ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+<p>png(file=&ldquo;Proj1_fig4.png&rdquo;, width=480, height=480)</p>
+
+<p>ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
   labs(x=&ldquo;Interval&rdquo;)+labs(y=&ldquo;Mean steps&rdquo;)+
   labs(title=&ldquo;Activity Patterns&rdquo;)+
-  facet_wrap(~F, ncol=1)
-dev.off()
-dev.cur()</p>
+  facet_wrap(~F, ncol=1)</p>
+
+<p>dev.off()</p>
+
+<p>dev.cur()</p>
 
 <h3>It appears that while the general patterns are similar for weekends and weekdays, trend for weekdays contains more fine structures than that for weekends.</h3>
 
