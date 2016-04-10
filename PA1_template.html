@@ -6,7 +6,7 @@
 head(data)
 str(data)</p>
 
-<h1>check missing values</h1>
+<h4>check missing values</h4>
 
 <p>summary(data$steps) 
 summary(data$interval) 
@@ -14,7 +14,7 @@ summary(data$date) </p>
 
 <h2>What is mean total number of steps taken per day?</h2>
 
-<h1>2a. Calculate the total number of steps taken per day</h1>
+<h3>2a. Calculate the total number of steps taken per day</h3>
 
 <p>daySum &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(date=data$date[!is.na(data$steps)]), 
@@ -22,14 +22,14 @@ summary(data$date) </p>
 head(daySum)
 str(daySum)</p>
 
-<h1>2b. Make a histogram of the total number of steps taken each day</h1>
+<h3>2b. Make a histogram of the total number of steps taken each day</h3>
 
-<h1>plot on screen</h1>
+<h4>plot on screen</h4>
 
 <p>hist(daySum$x, main=&ldquo;Distribution of Daily Total Steps&rdquo;,
      xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
 
-<h1>save plot</h1>
+<h4>save plot</h4>
 
 <p>png(file=&ldquo;Proj1_fig1.png&rdquo;, width=480, height=480)
 hist(daySum$x, main=&ldquo;Distribution of Daily Total Steps&rdquo;,
@@ -37,29 +37,29 @@ hist(daySum$x, main=&ldquo;Distribution of Daily Total Steps&rdquo;,
 dev.off()
 dev.cur()</p>
 
-<h1>2c. Calculate and report the mean and median of the total number of steps taken per day</h1>
+<h3>2c. Calculate and report the mean and median of the total number of steps taken per day</h3>
 
 <p>summary(daySum$x) </p>
 
-<h1>Mean = 9354</h1>
+<h4>Mean = 9354</h4>
 
-<h1>Median = 10500</h1>
+<h4>Median = 10500</h4>
 
 <p>dailyMeanSteps &lt;- mean(daySum$x, rm.na=TRUE)
 dailyMeanSteps</p>
 
-<h1>Mean = 9354.23</h1>
+<h4>Mean = 9354.23</h4>
 
 <p>dailyMedianSteps &lt;- median(daySum$x, rm.na=TRUE)
 dailyMedianSteps</p>
 
-<h1>Median = 10395</h1>
+<h4>Median = 10395</h4>
 
-<h1>Observation: Mean and median are slightly different from &ldquo;summary&rdquo; output. Why?</h1>
+<h3>Observation: Mean and median are slightly different from &ldquo;summary&rdquo; output. Why?</h3>
 
 <h2>What is the average daily activity pattern?</h2>
 
-<h1>3a. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</h1>
+<h3>3a. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</h3>
 
 <p>summary(data$interval)
 summary(data$steps)
@@ -70,13 +70,13 @@ head(myMean)
 str(myMean)
 summary(myMean$x)</p>
 
-<h1>plot on screen</h1>
+<h4>plot on screen</h4>
 
 <p>plot(x=myMean$interval, y=myMean$x, type=&ldquo;l&rdquo;, 
      main=&ldquo;Mean Number of Steps in 5-Minutes&rdquo;, 
      xlab = &ldquo;Interval&rdquo;, ylab=&ldquo;Mean Steps&rdquo;)</p>
 
-<h1>save plot</h1>
+<h4>save plot</h4>
 
 <p>png(file=&ldquo;Proj1_fig2.png&rdquo;, width=480, height=480)
 plot(x=myMean$interval, y=myMean$x, type=&ldquo;l&rdquo;, 
@@ -85,46 +85,46 @@ plot(x=myMean$interval, y=myMean$x, type=&ldquo;l&rdquo;,
 dev.off()
 dev.cur()</p>
 
-<h1>3b. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h1>
+<h3>3b. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h3>
 
 <p>myMean$interval[myMean$x==max(myMean$x)]</p>
 
-<h1>Max = 835</h1>
+<h4>Max = 835</h4>
 
 <h2>Imputing missing values</h2>
 
-<h1>4a. Calculate and report the total number of missing values in the dataset</h1>
+<h3>4a. Calculate and report the total number of missing values in the dataset</h3>
 
-<h1>check whether there are any dates missing (no)</h1>
+<h4>check whether there are any dates missing (no)</h4>
 
 <p>length(unique(data$date)) == max(as.Date(data$date))-min(as.Date(data$date))+1</p>
 
-<h1>check whether interval has missing values (no)</h1>
+<h4>check whether interval has missing values (no)</h4>
 
 <p>summary(data$interval) </p>
 
-<h1>check whether all intervals are present (yes, there are 2304 NA values)</h1>
+<h4>check whether all intervals are present (yes, there are 2304 NA values)</h4>
 
 <p>length(data$interval) == length(unique(data$date)) * 24 * 12</p>
 
-<h1>Therefore, number of missing rows = number of missing values in data$steps</h1>
+<h4>Therefore, number of missing rows = number of missing values in data$steps</h4>
 
 <p>sum(is.na(data$steps))</p>
 
-<h1>SumMissing = 2304</h1>
+<h4>SumMissing = 2304</h4>
 
-<h1>4b. Devise a strategy for filling in all of the missing values in the dataset.</h1>
+<h3>4b. Devise a strategy for filling in all of the missing values in the dataset.</h3>
 
-<h1>My strategy: replace missing values with mean for that day</h1>
+<h4>My strategy: replace missing values with mean for that day</h4>
 
-<h1>4c. Create a new dataset that is equal to the original dataset but with the missing data filled in.</h1>
+<h3>4c. Create a new dataset that is equal to the original dataset but with the missing data filled in.</h3>
 
 <p>dMean &lt;- rep(daySum$x/(24*12), each=24*12)
 data1 &lt;- data
 data1$steps[is.na(data$steps)] &lt;- dMean[is.na(data$steps)]
 summary(data1$steps)</p>
 
-<h1>4d. Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</h1>
+<h3>4d. Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</h3>
 
 <p>daySum1 &lt;- aggregate( x=data1$steps, 
                      by=list(date=data1$date), 
@@ -133,12 +133,12 @@ head(daySum1)
 str(daySum1)
 summary(daySum1$x)</p>
 
-<h1>plot on screen</h1>
+<h4>plot on screen</h4>
 
 <p>hist(daySum1$x, main=&ldquo;Distribution of Daily Total Steps\n(Missing Values Imputed)&rdquo;,
      xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
 
-<h1>save plot</h1>
+<h4>save plot</h4>
 
 <p>png(file=&ldquo;Proj1_fig3.png&rdquo;, width=480, height=480)
 hist(daySum1$x, main=&ldquo;Distribution of Daily Total Steps\n(Missing Values Imputed)&rdquo;,
@@ -146,11 +146,11 @@ hist(daySum1$x, main=&ldquo;Distribution of Daily Total Steps\n(Missing Values I
 dev.off()
 dev.cur()</p>
 
-<h1>It appears that imputation of missing values with mean steps of the day has no visible effect on the distribution, nor the mean and median. This is probably due to the nature of the missing values in the dataset, which likely occur only on certain days. Note that this result is strategy-dependent.</h1>
+<h3>It appears that imputation of missing values with mean steps of the day has no visible effect on the distribution, nor the mean and median. This is probably due to the nature of the missing values in the dataset, which likely occur only on certain days. Note that this result is strategy-dependent.</h3>
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
-<h1>5a. Create a new factor variable in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day.</h1>
+<h3>5a. Create a new factor variable in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day.</h3>
 
 <p>tf = is.member(weekdays(as.Date(data1$date)), c(&ldquo;Monday&rdquo;,&ldquo;Tuesday&rdquo;, 
                                             &ldquo;Wednesday&rdquo;,&ldquo;Thursday&rdquo;,&ldquo;Friday&rdquo;) )
@@ -167,14 +167,14 @@ data1$F &lt;- F
 str(data1)
 head(data1)</p>
 
-<h1>5b. Make a panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo;) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</h1>
+<h3>5b. Make a panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo;) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</h3>
 
 <p>myMean2 &lt;- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )
 str(myMean2)
 head(myMean2)
 tapply(myMean2$steps, myMean2$F, summary)</p>
 
-<h1>plot on screen</h1>
+<h4>plot on screen</h4>
 
 <p>library(ggplot2)
 ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
@@ -182,7 +182,7 @@ ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
   labs(title=&ldquo;Activity Patterns&rdquo;)+
   facet_wrap(~F, ncol=1)</p>
 
-<h1>save plot</h1>
+<h4>save plot</h4>
 
 <p>png(file=&ldquo;Proj1_fig4.png&rdquo;, width=480, height=480)
 ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
@@ -192,5 +192,5 @@ ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
 dev.off()
 dev.cur()</p>
 
-<h1>It appears that while the general patterns are similar for weekends and weekdays, trend for weekdays contains more fine structures than that for weekends.</h1>
+<h3>It appears that while the general patterns are similar for weekends and weekdays, trend for weekdays contains more fine structures than that for weekends.</h3>
 
