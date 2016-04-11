@@ -154,7 +154,7 @@ dev.cur()
 
 ### 5a. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 ```{r addF, echo=TRUE}
-tf = is.member(weekdays(as.Date(data1$date)), c("Monday","Tuesday", 
+tf = is.element(weekdays(as.Date(data1$date)), c("Monday","Tuesday", 
                                             "Wednesday","Thursday","Friday") )
 table(tf)
 str(tf)

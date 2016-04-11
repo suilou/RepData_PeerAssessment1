@@ -126,7 +126,7 @@ hist(daySum$x, main="Distribution of Daily Total Steps",
      xlab="Number of Steps", nclass=10)
 ```
 
-![title](Proj1_fig1.png)
+![plot of chunk fig1](figure/fig1-1.png)
 
 ```r
 # save plot
@@ -145,7 +145,7 @@ dev.off()
 dev.cur()
 ```
 
-![title](Proj1_fig1.png)
+![plot of chunk fig1](figure/fig1-2.png)
 
 ```
 ## RStudioGD 
@@ -176,14 +176,24 @@ dailyMeanSteps
 
 ```r
 # Mean = 9354.23
-dailyMedianSteps <- median(daySum$x)
+dailyMedianSteps <- median(daySum$x, rm.na=TRUE)
+```
+
+```
+## Error in median(daySum$x, rm.na = TRUE): unused argument (rm.na = TRUE)
+```
+
+```r
 dailyMedianSteps
 ```
 
 ```
-## [1] 10395
+## Error in eval(expr, envir, enclos): object 'dailyMedianSteps' not found
 ```
 
+```r
+# Median = 10395
+```
 #### Observation: Mean and median are slightly different from "summary" output. Why?
 
 
@@ -254,7 +264,7 @@ plot(x=myMean$interval, y=myMean$x, type="l",
      xlab = "Interval", ylab="Mean Steps")
 ```
 
-![title](Proj1_fig2.png)
+![plot of chunk fig2](figure/fig2-1.png)
 
 ```r
 # save plot
@@ -274,7 +284,7 @@ dev.off()
 dev.cur()
 ```
 
-![title](Proj1_fig2.png)
+![plot of chunk fig2](figure/fig2-2.png)
 
 ```
 ## RStudioGD 
@@ -403,7 +413,7 @@ hist(daySum1$x, main="Distribution of Daily Total Steps\n(Missing Values Imputed
      xlab="Number of Steps", nclass=10)
 ```
 
-![fig3](Proj1_fig3.png)
+![plot of chunk fig3](figure/fig3-1.png)
 
 ```r
 # save plot
@@ -422,7 +432,7 @@ dev.off()
 dev.cur()
 ```
 
-![fig3](Proj1_fig3.png)
+![plot of chunk fig3](figure/fig3-2.png)
 
 ```
 ## RStudioGD 
@@ -439,19 +449,24 @@ dev.cur()
 ### 5a. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
 ```r
-tf = is.member(weekdays(as.Date(data1$date)), c("Monday","Tuesday", 
+tf = is.element(weekdays(as.Date(data1$date)), c("Monday","Tuesday", 
                                             "Wednesday","Thursday","Friday") )
-```
-
-```r
 table(tf)
 ```
 
+```
+## tf
+## FALSE  TRUE 
+##  4608 12960
+```
 
 ```r
 str(tf)
 ```
 
+```
+##  logi [1:17568] TRUE TRUE TRUE TRUE TRUE TRUE ...
+```
 
 ```r
 sum(tf(tf==1))
@@ -463,21 +478,13 @@ sum(tf(tf==1))
 
 ```r
 F <- factor(tf)
-```
-
-```
-## Error in factor(tf): object 'tf' not found
-```
-
-```r
 levels(F)[levels(F)=="FALSE"] <- "weekend"
 levels(F)[levels(F)=="TRUE"] <- "weekday"
 str(F)
 ```
 
 ```
-##  atomic [1:1] FALSE
-##  - attr(*, "levels")= chr(0)
+##  Factor w/ 2 levels "weekend","weekday": 2 2 2 2 2 2 2 2 2 2 ...
 ```
 
 ```r
@@ -485,7 +492,8 @@ head(F)
 ```
 
 ```
-## [1] FALSE
+## [1] weekday weekday weekday weekday weekday weekday
+## Levels: weekend weekday
 ```
 
 ```r
@@ -498,7 +506,7 @@ str(data1)
 ##  $ steps   : num  0.438 0.438 0.438 0.438 0.438 ...
 ##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
-##  $ F       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ F       : Factor w/ 2 levels "weekend","weekday": 2 2 2 2 2 2 2 2 2 2 ...
 ```
 
 ```r
@@ -506,13 +514,13 @@ head(data1)
 ```
 
 ```
-##    steps       date interval     F
-## 1 0.4375 2012-10-01        0 FALSE
-## 2 0.4375 2012-10-01        5 FALSE
-## 3 0.4375 2012-10-01       10 FALSE
-## 4 0.4375 2012-10-01       15 FALSE
-## 5 0.4375 2012-10-01       20 FALSE
-## 6 0.4375 2012-10-01       25 FALSE
+##    steps       date interval       F
+## 1 0.4375 2012-10-01        0 weekday
+## 2 0.4375 2012-10-01        5 weekday
+## 3 0.4375 2012-10-01       10 weekday
+## 4 0.4375 2012-10-01       15 weekday
+## 5 0.4375 2012-10-01       20 weekday
+## 6 0.4375 2012-10-01       25 weekday
 ```
 
 ### 5b. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
@@ -523,10 +531,10 @@ str(myMean2)
 ```
 
 ```
-## 'data.frame':	288 obs. of  3 variables:
+## 'data.frame':	576 obs. of  3 variables:
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
-##  $ F       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ steps   : num  4.77 3.56 3.37 3.39 3.32 ...
+##  $ F       : Factor w/ 2 levels "weekend","weekday": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ steps   : num  3.81 3.81 3.81 3.81 3.81 ...
 ```
 
 ```r
@@ -534,13 +542,13 @@ head(myMean2)
 ```
 
 ```
-##   interval     F    steps
-## 1        0 FALSE 4.771933
-## 2        5 FALSE 3.555266
-## 3       10 FALSE 3.371933
-## 4       15 FALSE 3.388600
-## 5       20 FALSE 3.321933
-## 6       25 FALSE 5.105266
+##   interval       F   steps
+## 1        0 weekend 3.81033
+## 2        5 weekend 3.81033
+## 3       10 weekend 3.81033
+## 4       15 weekend 3.81033
+## 5       20 weekend 3.81033
+## 6       25 weekend 7.06033
 ```
 
 ```r
@@ -548,9 +556,13 @@ tapply(myMean2$steps, myMean2$F, summary)
 ```
 
 ```
-## $`FALSE`
+## $weekend
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   3.255   5.451  33.390  36.280  49.930 185.400
+##   3.810   4.779  31.840  41.500  69.940 156.900 
+## 
+## $weekday
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.053   5.019  24.300  34.380  49.030 210.600
 ```
 
 ```r
