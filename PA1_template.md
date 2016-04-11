@@ -126,7 +126,7 @@ hist(daySum$x, main="Distribution of Daily Total Steps",
      xlab="Number of Steps", nclass=10)
 ```
 
-![plot of chunk fig1](figure/fig1-1.png)
+![title](Proj1_fig1.png)
 
 ```r
 # save plot
@@ -145,7 +145,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig1](figure/fig1-2.png)
+![title](Proj1_fig1.png)
 
 ```
 ## RStudioGD 
@@ -176,24 +176,14 @@ dailyMeanSteps
 
 ```r
 # Mean = 9354.23
-dailyMedianSteps <- median(daySum$x, rm.na=TRUE)
-```
-
-```
-## Error in median(daySum$x, rm.na = TRUE): unused argument (rm.na = TRUE)
-```
-
-```r
+dailyMedianSteps <- median(daySum$x)
 dailyMedianSteps
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'dailyMedianSteps' not found
+## [1] 10395
 ```
 
-```r
-# Median = 10395
-```
 #### Observation: Mean and median are slightly different from "summary" output. Why?
 
 
@@ -264,7 +254,7 @@ plot(x=myMean$interval, y=myMean$x, type="l",
      xlab = "Interval", ylab="Mean Steps")
 ```
 
-![plot of chunk fig2](figure/fig2-1.png)
+![title](Proj1_fig2.png)
 
 ```r
 # save plot
@@ -284,7 +274,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig2](figure/fig2-2.png)
+![title](Proj1_fig2.png)
 
 ```
 ## RStudioGD 
@@ -413,7 +403,7 @@ hist(daySum1$x, main="Distribution of Daily Total Steps\n(Missing Values Imputed
      xlab="Number of Steps", nclass=10)
 ```
 
-![plot of chunk fig3](figure/fig3-1.png)
+![fig3](Proj1_fig3.png)
 
 ```r
 # save plot
@@ -432,7 +422,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig3](figure/fig3-2.png)
+![fig3](Proj1_fig3.png)
 
 ```
 ## RStudioGD 
@@ -453,25 +443,15 @@ tf = is.member(weekdays(as.Date(data1$date)), c("Monday","Tuesday",
                                             "Wednesday","Thursday","Friday") )
 ```
 
-```
-## Error in eval(expr, envir, enclos): could not find function "is.member"
-```
-
 ```r
 table(tf)
 ```
 
-```
-## Error in table(tf): object 'tf' not found
-```
 
 ```r
 str(tf)
 ```
 
-```
-## Error in str(tf): object 'tf' not found
-```
 
 ```r
 sum(tf(tf==1))
