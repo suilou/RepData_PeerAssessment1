@@ -49,14 +49,10 @@ dev.cur()
 ### 2c. Calculate and report the mean and median of the total number of steps taken per day
 ```{r dayMean, echo=TRUE}
 summary(daySum$x) 
-# Mean = 9354 
-# Median = 10500
 dailyMeanSteps <- mean(daySum$x, rm.na=TRUE)
 dailyMeanSteps
-# Mean = 9354.23
 dailyMedianSteps <- median(daySum$x)
 dailyMedianSteps
-# Median = 10395
 ```
 #### Observation: Mean and median are slightly different from "summary" output. Why?
 
@@ -94,7 +90,6 @@ dev.cur()
 ```{r tsMax, echo=TRUE}
 myMax <- myMean$interval[myMean$x==max(myMean$x)]
 myMax
-# myMax = 835
 ```
 
 ## Imputing missing values
@@ -111,7 +106,6 @@ length(data$interval) == length(unique(data$date)) * 24 * 12
 # Therefore, number of missing rows = number of missing values in data$steps
 
 sum(is.na(data$steps))
-# SumMissing = 2304
 ```
 
 ### 4b. Devise a strategy for filling in all of the missing values in the dataset.
