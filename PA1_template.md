@@ -164,8 +164,6 @@ summary(daySum$x)
 ```
 
 ```r
-# Mean = 9354 
-# Median = 10500
 dailyMeanSteps <- mean(daySum$x, rm.na=TRUE)
 dailyMeanSteps
 ```
@@ -175,7 +173,6 @@ dailyMeanSteps
 ```
 
 ```r
-# Mean = 9354.23
 dailyMedianSteps <- median(daySum$x)
 dailyMedianSteps
 ```
@@ -184,9 +181,6 @@ dailyMedianSteps
 ## [1] 10765
 ```
 
-```r
-# Median = 10395
-```
 #### Observation: Mean and median are slightly different from "summary" output. Why?
 
 
@@ -295,10 +289,6 @@ myMax
 ## [1] 835
 ```
 
-```r
-# myMax = 835
-```
-
 ## Imputing missing values
 
 ### 4a. Calculate and report the total number of missing values in the dataset
@@ -341,9 +331,6 @@ sum(is.na(data$steps))
 ## [1] 2304
 ```
 
-```r
-# SumMissing = 2304
-```
 
 ### 4b. Devise a strategy for filling in all of the missing values in the dataset.
 #### My strategy: replace missing values with mean for that day
