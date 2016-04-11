@@ -158,7 +158,6 @@ tf = is.element(weekdays(as.Date(data1$date)), c("Monday","Tuesday",
                                             "Wednesday","Thursday","Friday") )
 table(tf)
 str(tf)
-sum(tf(tf==1))
 F <- factor(tf)
 levels(F)[levels(F)=="FALSE"] <- "weekend"
 levels(F)[levels(F)=="TRUE"] <- "weekday"
@@ -178,13 +177,13 @@ tapply(myMean2$steps, myMean2$F, summary)
 
 # plot on screen
 library(ggplot2)
-ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+ggplot(myMean2, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
   labs(x="Interval")+labs(y="Mean steps")+
   labs(title="Activity Patterns")+
   facet_wrap(~F, ncol=1)
 # save plot
 png(file="Proj1_fig4.png", width=480, height=480)
-ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+ggplot(myMean2, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
   labs(x="Interval")+labs(y="Mean steps")+
   labs(title="Activity Patterns")+
   facet_wrap(~F, ncol=1)
@@ -192,4 +191,4 @@ dev.off()
 dev.cur()
 ```
 
-### It appears that while the general patterns are similar for weekends and weekdays, trend for weekdays contains more fine structures than that for weekends.
+### It appears that activity pattern for weekends is different from that for weekdays.

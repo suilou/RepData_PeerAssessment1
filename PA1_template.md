@@ -33,7 +33,7 @@ str(data)
 ```
 
 ```
-## 'data.frame':	17568 obs. of  3 variables:
+## 'data.frame':  17568 obs. of  3 variables:
 ##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
@@ -113,7 +113,7 @@ str(daySum)
 ```
 
 ```
-## 'data.frame':	53 obs. of  2 variables:
+## 'data.frame':  53 obs. of  2 variables:
 ##  $ date: Factor w/ 61 levels "2012-10-01","2012-10-02",..: 2 3 4 5 6 7 9 10 11 12 ...
 ##  $ x   : int  126 11352 12116 13294 15420 11015 12811 9900 10304 17382 ...
 ```
@@ -126,7 +126,7 @@ hist(daySum$x, main="Distribution of Daily Total Steps",
      xlab="Number of Steps", nclass=10)
 ```
 
-![plot of chunk fig1](figure/fig1-1.png)
+![fig1](Proj1_fig1.png)
 
 ```r
 # save plot
@@ -145,7 +145,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig1](figure/fig1-2.png)
+![fig1](Proj1_fig1.png)
 
 ```
 ## RStudioGD 
@@ -234,7 +234,7 @@ str(myMean)
 ```
 
 ```
-## 'data.frame':	288 obs. of  2 variables:
+## 'data.frame':  288 obs. of  2 variables:
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 ##  $ x       : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
 ```
@@ -257,7 +257,7 @@ plot(x=myMean$interval, y=myMean$x, type="l",
      xlab = "Interval", ylab="Mean Steps")
 ```
 
-![plot of chunk fig2](figure/fig2-1.png)
+![fig2](Proj1_fig2.png)
 
 ```r
 # save plot
@@ -277,7 +277,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig2](figure/fig2-2.png)
+![fig2](Proj1_fig2.png)
 
 ```
 ## RStudioGD 
@@ -386,7 +386,7 @@ str(daySum1)
 ```
 
 ```
-## 'data.frame':	61 obs. of  2 variables:
+## 'data.frame':  61 obs. of  2 variables:
 ##  $ date: Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 2 3 4 5 6 7 8 9 10 ...
 ##  $ x   : num  126 126 11352 12116 13294 ...
 ```
@@ -406,7 +406,7 @@ hist(daySum1$x, main="Distribution of Daily Total Steps\n(Missing Values Imputed
      xlab="Number of Steps", nclass=10)
 ```
 
-![plot of chunk fig3](figure/fig3-1.png)
+![fig3](Proj1_fig3.png)
 
 ```r
 # save plot
@@ -425,7 +425,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig3](figure/fig3-2.png)
+![fig3](Proj1_fig3.png)
 
 ```
 ## RStudioGD 
@@ -462,14 +462,6 @@ str(tf)
 ```
 
 ```r
-sum(tf(tf==1))
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "tf"
-```
-
-```r
 F <- factor(tf)
 levels(F)[levels(F)=="FALSE"] <- "weekend"
 levels(F)[levels(F)=="TRUE"] <- "weekday"
@@ -495,7 +487,7 @@ str(data1)
 ```
 
 ```
-## 'data.frame':	17568 obs. of  4 variables:
+## 'data.frame':  17568 obs. of  4 variables:
 ##  $ steps   : num  0.438 0.438 0.438 0.438 0.438 ...
 ##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
@@ -524,7 +516,7 @@ str(myMean2)
 ```
 
 ```
-## 'data.frame':	576 obs. of  3 variables:
+## 'data.frame':  576 obs. of  3 variables:
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 ##  $ F       : Factor w/ 2 levels "weekend","weekday": 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ steps   : num  3.81 3.81 3.81 3.81 3.81 ...
@@ -561,30 +553,21 @@ tapply(myMean2$steps, myMean2$F, summary)
 ```r
 # plot on screen
 library(ggplot2)
-ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+ggplot(myMean2, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
   labs(x="Interval")+labs(y="Mean steps")+
   labs(title="Activity Patterns")+
   facet_wrap(~F, ncol=1)
 ```
 
-```
-## Error in ggplot(weekData, aes(interval, steps)): object 'weekData' not found
-```
+![fig4](Proj1_fig4.png)
 
 ```r
 # save plot
 png(file="Proj1_fig4.png", width=480, height=480)
-ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+ggplot(myMean2, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
   labs(x="Interval")+labs(y="Mean steps")+
   labs(title="Activity Patterns")+
   facet_wrap(~F, ncol=1)
-```
-
-```
-## Error in ggplot(weekData, aes(interval, steps)): object 'weekData' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -597,11 +580,11 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig4](figure/fig4-1.png)
+![fig4](Proj1_fig4.png)
 
 ```
 ## RStudioGD 
 ##         2
 ```
 
-### It appears that while the general patterns are similar for weekends and weekdays, trend for weekdays contains more fine structures than that for weekends.
+### It appears that activity pattern for weekends is different from that for weekdays.
