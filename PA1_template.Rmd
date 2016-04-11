@@ -13,7 +13,7 @@ output:
 rm( list = ls() )
 raw_file<-"activity.zip"
 unzip(raw_file)
-data <- read.csv('data/activity.csv', header=TRUE, na.strings="NA")
+data <- read.csv('activity.csv', header=TRUE, na.strings="NA")
 head(data)
 str(data)
 # check missing values 

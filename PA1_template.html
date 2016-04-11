@@ -3,52 +3,68 @@
 <pre><code class="r">rm( list = ls() )
 raw_file&lt;-&quot;activity.zip&quot;
 unzip(raw_file)
-data &lt;- read.csv(&#39;data/activity.csv&#39;, header=TRUE, na.strings=&quot;NA&quot;)
+data &lt;- read.csv(&#39;activity.csv&#39;, header=TRUE, na.strings=&quot;NA&quot;)
+head(data)
 </code></pre>
 
-<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;data/activity.csv&#39;: No such
-## file or directory
-</code></pre>
-
-<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection
-</code></pre>
-
-<pre><code class="r">head(data)
-</code></pre>
-
-<pre><code>##                                                                      
-## 1 function (..., list = character(), package = NULL, lib.loc = NULL, 
-## 2     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)            
-## 3 {                                                                  
-## 4     fileExt &lt;- function(x) {                                       
-## 5         db &lt;- grepl(&quot;\\\\.[^.]+\\\\.(gz|bz2|xz)$&quot;, x)              
-## 6         ans &lt;- sub(&quot;.*\\\\.&quot;, &quot;&quot;, x)
+<pre><code>##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
 </code></pre>
 
 <pre><code class="r">str(data)
 </code></pre>
 
-<pre><code>## function (..., list = character(), package = NULL, lib.loc = NULL, 
-##     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)
+<pre><code>## &#39;data.frame&#39;:    17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Factor w/ 61 levels &quot;2012-10-01&quot;,&quot;2012-10-02&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 </code></pre>
 
 <pre><code class="r"># check missing values 
 summary(data$steps)
 </code></pre>
 
-<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.00    0.00    0.00   37.38   12.00  806.00    2304
 </code></pre>
 
 <pre><code class="r">summary(data$interval)
 </code></pre>
 
-<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0   588.8  1178.0  1178.0  1766.0  2355.0
 </code></pre>
 
 <pre><code class="r">summary(data$date) 
 </code></pre>
 
-<pre><code>## Error in data$date: object of type &#39;closure&#39; is not subsettable
+<pre><code>## 2012-10-01 2012-10-02 2012-10-03 2012-10-04 2012-10-05 2012-10-06 
+##        288        288        288        288        288        288 
+## 2012-10-07 2012-10-08 2012-10-09 2012-10-10 2012-10-11 2012-10-12 
+##        288        288        288        288        288        288 
+## 2012-10-13 2012-10-14 2012-10-15 2012-10-16 2012-10-17 2012-10-18 
+##        288        288        288        288        288        288 
+## 2012-10-19 2012-10-20 2012-10-21 2012-10-22 2012-10-23 2012-10-24 
+##        288        288        288        288        288        288 
+## 2012-10-25 2012-10-26 2012-10-27 2012-10-28 2012-10-29 2012-10-30 
+##        288        288        288        288        288        288 
+## 2012-10-31 2012-11-01 2012-11-02 2012-11-03 2012-11-04 2012-11-05 
+##        288        288        288        288        288        288 
+## 2012-11-06 2012-11-07 2012-11-08 2012-11-09 2012-11-10 2012-11-11 
+##        288        288        288        288        288        288 
+## 2012-11-12 2012-11-13 2012-11-14 2012-11-15 2012-11-16 2012-11-17 
+##        288        288        288        288        288        288 
+## 2012-11-18 2012-11-19 2012-11-20 2012-11-21 2012-11-22 2012-11-23 
+##        288        288        288        288        288        288 
+## 2012-11-24 2012-11-25 2012-11-26 2012-11-27 2012-11-28 2012-11-29 
+##        288        288        288        288        288        288 
+## 2012-11-30 
+##        288
 </code></pre>
 
 <h2>What is mean total number of steps taken per day?</h2>
@@ -58,21 +74,24 @@ summary(data$steps)
 <pre><code class="r">daySum &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(date=data$date[!is.na(data$steps)]), 
                      FUN=sum)
+head(daySum)
 </code></pre>
 
-<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">head(daySum)
-</code></pre>
-
-<pre><code>## Error in head(daySum): object &#39;daySum&#39; not found
+<pre><code>##         date     x
+## 1 2012-10-02   126
+## 2 2012-10-03 11352
+## 3 2012-10-04 12116
+## 4 2012-10-05 13294
+## 5 2012-10-06 15420
+## 6 2012-10-07 11015
 </code></pre>
 
 <pre><code class="r">str(daySum)
 </code></pre>
 
-<pre><code>## Error in str(daySum): object &#39;daySum&#39; not found
+<pre><code>## &#39;data.frame&#39;:    53 obs. of  2 variables:
+##  $ date: Factor w/ 61 levels &quot;2012-10-01&quot;,&quot;2012-10-02&quot;,..: 2 3 4 5 6 7 9 10 11 12 ...
+##  $ x   : int  126 11352 12116 13294 15420 11015 12811 9900 10304 17382 ...
 </code></pre>
 
 <h3>2b. Make a histogram of the total number of steps taken each day</h3>
@@ -82,19 +101,13 @@ hist(daySum$x, main=&quot;Distribution of Daily Total Steps&quot;,
      xlab=&quot;Number of Steps&quot;, nclass=10)
 </code></pre>
 
-<pre><code>## Error in hist(daySum$x, main = &quot;Distribution of Daily Total Steps&quot;, xlab = &quot;Number of Steps&quot;, : object &#39;daySum&#39; not found
-</code></pre>
+<p><img src="data:image/png;base64,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" alt="plot of chunk fig1"/></p>
 
 <pre><code class="r"># save plot
 png(file=&quot;Proj1_fig1.png&quot;, width=480, height=480)
 hist(daySum$x, main=&quot;Distribution of Daily Total Steps&quot;,
      xlab=&quot;Number of Steps&quot;, nclass=10)
-</code></pre>
-
-<pre><code>## Error in hist(daySum$x, main = &quot;Distribution of Daily Total Steps&quot;, xlab = &quot;Number of Steps&quot;, : object &#39;daySum&#39; not found
-</code></pre>
-
-<pre><code class="r">dev.off()
+dev.off()
 </code></pre>
 
 <pre><code>## RStudioGD 
@@ -115,21 +128,17 @@ hist(daySum$x, main=&quot;Distribution of Daily Total Steps&quot;,
 <pre><code class="r">summary(daySum$x) 
 </code></pre>
 
-<pre><code>## Error in summary(daySum$x): object &#39;daySum&#39; not found
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    8841   10760   10770   13290   21190
 </code></pre>
 
 <pre><code class="r"># Mean = 9354 
 # Median = 10500
 dailyMeanSteps &lt;- mean(daySum$x, rm.na=TRUE)
+dailyMeanSteps
 </code></pre>
 
-<pre><code>## Error in mean(daySum$x, rm.na = TRUE): object &#39;daySum&#39; not found
-</code></pre>
-
-<pre><code class="r">dailyMeanSteps
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;dailyMeanSteps&#39; not found
+<pre><code>## [1] 10766.19
 </code></pre>
 
 <pre><code class="r"># Mean = 9354.23
@@ -157,39 +166,45 @@ dailyMedianSteps &lt;- median(daySum$x, rm.na=TRUE)
 <pre><code class="r">summary(data$interval)
 </code></pre>
 
-<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0   588.8  1178.0  1178.0  1766.0  2355.0
 </code></pre>
 
 <pre><code class="r">summary(data$steps)
 </code></pre>
 
-<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.00    0.00    0.00   37.38   12.00  806.00    2304
 </code></pre>
 
 <pre><code class="r">myMean &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(interval=data$interval[!is.na(data$steps)]), 
                      FUN=mean )
+head(myMean)
 </code></pre>
 
-<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">head(myMean)
-</code></pre>
-
-<pre><code>## Error in head(myMean): object &#39;myMean&#39; not found
+<pre><code>##   interval         x
+## 1        0 1.7169811
+## 2        5 0.3396226
+## 3       10 0.1320755
+## 4       15 0.1509434
+## 5       20 0.0754717
+## 6       25 2.0943396
 </code></pre>
 
 <pre><code class="r">str(myMean)
 </code></pre>
 
-<pre><code>## Error in str(myMean): object &#39;myMean&#39; not found
+<pre><code>## &#39;data.frame&#39;:    288 obs. of  2 variables:
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ x       : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
 </code></pre>
 
 <pre><code class="r">summary(myMean$x)
 </code></pre>
 
-<pre><code>## Error in summary(myMean$x): object &#39;myMean&#39; not found
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   2.486  34.110  37.380  52.830 206.200
 </code></pre>
 
 <h4>plot</h4>
@@ -200,20 +215,14 @@ plot(x=myMean$interval, y=myMean$x, type=&quot;l&quot;,
      xlab = &quot;Interval&quot;, ylab=&quot;Mean Steps&quot;)
 </code></pre>
 
-<pre><code>## Error in plot(x = myMean$interval, y = myMean$x, type = &quot;l&quot;, main = &quot;Mean Number of Steps in 5-Minutes&quot;, : object &#39;myMean&#39; not found
-</code></pre>
+<p><img src="data:image/png;base64,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" alt="plot of chunk fig2"/></p>
 
 <pre><code class="r"># save plot
 png(file=&quot;Proj1_fig2.png&quot;, width=480, height=480)
 plot(x=myMean$interval, y=myMean$x, type=&quot;l&quot;, 
      main=&quot;Mean Number of Steps in 5-Minutes&quot;, 
      xlab = &quot;Interval&quot;, ylab=&quot;Mean Steps&quot;)
-</code></pre>
-
-<pre><code>## Error in plot(x = myMean$interval, y = myMean$x, type = &quot;l&quot;, main = &quot;Mean Number of Steps in 5-Minutes&quot;, : object &#39;myMean&#39; not found
-</code></pre>
-
-<pre><code class="r">dev.off()
+dev.off()
 </code></pre>
 
 <pre><code>## RStudioGD 
@@ -232,15 +241,10 @@ plot(x=myMean$interval, y=myMean$x, type=&quot;l&quot;,
 <h3>3b. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h3>
 
 <pre><code class="r">myMax &lt;- myMean$interval[myMean$x==max(myMean$x)]
+myMax
 </code></pre>
 
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;myMean&#39; not found
-</code></pre>
-
-<pre><code class="r">myMax
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;myMax&#39; not found
+<pre><code>## [1] 835
 </code></pre>
 
 <pre><code class="r"># myMax = 835
@@ -254,21 +258,22 @@ plot(x=myMean$interval, y=myMean$x, type=&quot;l&quot;,
 length(unique(data$date)) == max(as.Date(data$date))-min(as.Date(data$date))+1
 </code></pre>
 
-<pre><code>## Error in data$date: object of type &#39;closure&#39; is not subsettable
+<pre><code>## [1] TRUE
 </code></pre>
 
 <pre><code class="r"># check whether interval has missing values (no)
 summary(data$interval)
 </code></pre>
 
-<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0   588.8  1178.0  1178.0  1766.0  2355.0
 </code></pre>
 
 <pre><code class="r"># check whether all intervals are present (yes, there are 2304 NA values)
 length(data$interval) == length(unique(data$date)) * 24 * 12
 </code></pre>
 
-<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+<pre><code>## [1] TRUE
 </code></pre>
 
 <pre><code class="r"># Therefore, number of missing rows = number of missing values in data$steps
@@ -276,7 +281,7 @@ length(data$interval) == length(unique(data$date)) * 24 * 12
 sum(is.na(data$steps))
 </code></pre>
 
-<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+<pre><code>## [1] 2304
 </code></pre>
 
 <pre><code class="r"># SumMissing = 2304
@@ -289,22 +294,13 @@ sum(is.na(data$steps))
 <h3>4c. Create a new dataset that is equal to the original dataset but with the missing data filled in.</h3>
 
 <pre><code class="r">dMean &lt;- rep(daySum$x/(24*12), each=24*12)
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;daySum&#39; not found
-</code></pre>
-
-<pre><code class="r">data1 &lt;- data
+data1 &lt;- data
 data1$steps[is.na(data$steps)] &lt;- dMean[is.na(data$steps)]
+summary(data1$steps)
 </code></pre>
 
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;dMean&#39; not found
-</code></pre>
-
-<pre><code class="r">summary(data1$steps)
-</code></pre>
-
-<pre><code>## Error in data1$steps: object of type &#39;closure&#39; is not subsettable
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.00    0.00    0.00   36.28   25.25  806.00     288
 </code></pre>
 
 <h3>4d. Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</h3>
@@ -312,27 +308,31 @@ data1$steps[is.na(data$steps)] &lt;- dMean[is.na(data$steps)]
 <pre><code class="r">daySum1 &lt;- aggregate( x=data1$steps, 
                      by=list(date=data1$date), 
                      FUN=sum )
+head(daySum1)
 </code></pre>
 
-<pre><code>## Error in data1$steps: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">head(daySum1)
-</code></pre>
-
-<pre><code>## Error in head(daySum1): object &#39;daySum1&#39; not found
+<pre><code>##         date     x
+## 1 2012-10-01   126
+## 2 2012-10-02   126
+## 3 2012-10-03 11352
+## 4 2012-10-04 12116
+## 5 2012-10-05 13294
+## 6 2012-10-06 15420
 </code></pre>
 
 <pre><code class="r">str(daySum1)
 </code></pre>
 
-<pre><code>## Error in str(daySum1): object &#39;daySum1&#39; not found
+<pre><code>## &#39;data.frame&#39;:    61 obs. of  2 variables:
+##  $ date: Factor w/ 61 levels &quot;2012-10-01&quot;,&quot;2012-10-02&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ x   : num  126 126 11352 12116 13294 ...
 </code></pre>
 
 <pre><code class="r">summary(daySum1$x)
 </code></pre>
 
-<pre><code>## Error in summary(daySum1$x): object &#39;daySum1&#39; not found
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##      41    8704   10590   10450   12990   21190       1
 </code></pre>
 
 <pre><code class="r"># plot on screen
@@ -340,19 +340,13 @@ hist(daySum1$x, main=&quot;Distribution of Daily Total Steps\n(Missing Values Im
      xlab=&quot;Number of Steps&quot;, nclass=10)
 </code></pre>
 
-<pre><code>## Error in hist(daySum1$x, main = &quot;Distribution of Daily Total Steps\n(Missing Values Imputed)&quot;, : object &#39;daySum1&#39; not found
-</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAAsSAAALEgHS3X78AAANDUlEQVR4nO2di3bjKBAF4f9/ek/GsQR6GSuw96KuOrNjx76NGpWFFcWZTRlCktQNgAbEBwXxQUF8UBAfFMQHBfFBQXxQEB8UxAcF8UFBfFAQHxTEBwXxQUF8ULzFp3+87pUPF4HNU2vg4OGj8TfbOR84pV0qbQrW3PZZP8y72xvJO6V7wy3Oq1zLdvbi05H4JdXahAjz7l6Hblrvpfchtfx53yyZNZCXY/r1aDHue7i02c7vNqqBi9fHQXlRsG+ibuBd7LDTHXo4ZxW6GF+9vu2mVO77Wnyx+4sdXihLu+2sx+uZ+Kp8e4BXR/62gfKOGIMWLtiKLx4tD8xUrQrVneWpqj7VD5QrxmZ765FaxI7K66U+F00cNGmASRsnHBzxudylW82f7+S8fbTezvp+ciG+Lk/bV0EqX4b1V+Uyo8Whh3N2dtPGYn/xaTlxaBRfFFR9n4h3MW/QwgXror5dhveLwebOybtAzqdL/fZIb1vqy3Ax1GaTa1EuHxVi0MIF6znZskr+3lbit2dwRyd3ubZw8EAxRn3MFu1sytPRyV3ZRNVztQE1Bi1csO6ldU/n9+HzfjiV3ymtttZo3oqvHq238y69Ep/LbFmwjrWm1tdY8bLptHv+gkMP1nTSZCG7xK0fOzoZQ/xk9FqXEQ8eID4oiA8K4oMypfi0+1b6IHM2s6Xwc/SLxMGO/NfZxzoVvp2ds14Xu3U1ZHMxp4/4g8TZS9ID28YuqC6IlZfY3hfMisvl68qwv5q+iZbX4ouBcjlY3lyHW79a+snV9mz3r21j5yw7++dmsba9KL7e314hL2Tvrsu/owclaaG68p5L8eXl2iLgiGtfFxTHXKp/hro8mxdX653q+N0ey+WrIdcDblPVeAcrRr09xPfjTHxxoOYzm+8BqtV8E90evflI/MkWijVks1E3XPu6YN3ZOW33+nrbIn67YBy8PaybRLyaakG9WOYPl97f59M2Vo1Xb+okmfZlxUuLpb4/x+KPT+7WeDoSf3UeuD+522+sfmPYPZ4R35NCZ96ss3m93RyGqTihWw7+14G5lOdqgLx6P1rq6yHeY6Z1aJb67nzfc28H7UPZ7l/bxi743uC6kP/PHdge8FOKv3XI9/T+hfh+2+yMb2cwFMQHBfFBQXxQEB8UxAcF8UFBfFAQHxTEBwXxQUF8UBAfFMQHBfFBQXxQEB8UxAcF8UFBfFAQHxTEBwXxQUF8UBAflLDiUwPqHkfy6Mld0TDxR++bR0/uCsQHBfFBQXxQEB8UxAcF8UFBfFAQHxTEBwXxQUF8UBAfFMQHBfFBQXxQEB8UxAcF8UFBfFAQHxTEBwXxQUF8UBAfFMQHBfFBQXxQEB8UxAcF8UFBfFAQHxTEtyQe+O+CIL4hkdqSU4H4hgTin0eD+IT4B9IyuX9v8E/bC4gPCuJv1DzhHwBEvKZWDuI1tXIQ/zFxurBPvWMQfz8y9Y5B/P3M1DsG8ZpaOYjX1MpBvKZWDuI1tXIQr6mVg3hNrRzEa2rlIF5TKwfxmlo5iNfUykG8plYO4jW1chCvqZWDeE2tHMRrauUgXlMrB/GaWjmI19TKQbymVg7iNbVyEK+plYN4Ta0cxGtq5SBeUysH8ZpaOYjX1MpBvKZWDuI1tXIQr6mVg3hNrRzEa2rlIF5TKwfxmlo5iNfUykG8plYO4jW1chCvqZWDeE2tHMRrauUgXlMrB/GaWjmI19TKQbymVg7iNbVyEK+plYN4Ta0cxGtq5SBeUysH8ZpaOYjX1MpBvKZWDuI1tXIQr6mVg3hNrRzEa2rlIF5TKwfxmlo5iNfUykG8plYO4jW1chCvqZWDeE2tHMRrauUgXlMrB/GaWjmI19TKQbymVg7iNbVyEK+plYN4Ta0cxGtq5SBeUysH8ZpaOYjX1MpBvKZWDuI1tXJaxDcwvtFBIH50xBTEj46YgvjREVMQPzpiCuJHR0xB/OiIKYgfHTEF8aMjpiB+dMQUxI+OmIL40RFTED86YgriR0dMaf8h1a1aXxDfmtgn5511RjziR0dMQfzoiCm8x4+OmMJZ/eiIKXc6n/8DZxnxHPGjI6b8dn7r6J131hnxS+enK/f5wj7vrDPiy85P3J9Obt5ZZ8RvjvivzM8764x43uNHR0zhrH50xJTyguy3s5h31hnxqbz5chrzzjojHvGjI6YsS/2NS7DzzjojnpO70RFTED86Ykq11PMePyBiSnVyd692ThBf3tyqnRPElze3aucE8a8b3uNHRUzhrH50xBTEj46YUnw7xw9phkRMWU/uEtfqh0RMQfzoiCmIHx0xhZ/OjY6Ywln96IgpiB8dMYUrd6MjpqST+9/WTgfiz774snY2EH/2xZe1s4H41w3fzo2KmMJZ/eiIKYgfHTGl/nbuu9V+3llnxKfilvf4ERFTqs/ccVY/IGIK4kdHTOGnc6Mjpjz0rL7L/xW2JdJlQwqeKr5D4tmLQrHUP+msHvGfeOhHrxD/CcQbRBQg3iCi4KHfziH+E5zVG0QUVFfu7tU6gvhPIN4goqD+seytWkcQ/wne4w0iChBvEFGQlr9u1nqC+E8s4m/0ZzqlHxD/CcQbRBQg3iCi4CX+3mcGTKf0A+I/wVm9QUQB4g0iChBvEFGAeIOIAsQbRBQg3iCiAPEGEQWIN4goQLxBRAHiDSIKEG8QUYB4g4gCxBtEFCDeIKIA8QYRBYg3iChAvEFEAeINIgoQbxBRgHiDiALEG0QUIN4gogDxBhEFiDeIKEC8QUQB4g0iChBvEFGAeIOIAsQbRBQg3iCiAPEGEQWIN4goQLxBRAHiDSIKEG8QUYB4g4gCxBtEFCDeIKIA8QYRBYg3iChAvEFEQdseOv5XL02n9APiP9G0h9Jx0nRKPyD+E3fEm//vcn9A/Cca9lDiiB8cUdDS1r9jm/f4cREFnNUbRBQg3iCiAPEGEQWIN4goQLxBRAHiDSIKEG8QUYB4g4gCxBtEFCDeIKIA8QYRBYg3iChAvEFEAeINIgoQbxBRgHiDiALEG0QU2IlPDfRoDfGa2r8MivgOIN4gogDxBhEFiDeIKEC8QUQB4g0iChBvEFGAeIOIAsQbRBQg3iCiAPEGEQWIN4goQLxBRAHiDSIKEG8QUYB4g4gCxBtEFCDeIKIA8QYRBYg3iCjoKL7lY5J9PknZYxTEd6t12pWI/wTiDSIKEG8QUYB4g4gCxBtEFCDeIKIA8QYRBYg3iChAvEFEAeINIgoQbxBRgHiDiALEG0QUIN4gogDxBhEFiDeIKEC8QUQB4g0iChBvEFGAeINIA30+rdipLcT/j+J7bwjxBpEGEN8rYtRKC4jvFTFqpQXE94oYtdIC4ntFjFppAfG9IkattID4XhGjVlpAfK+IUSstIL5XxKiVFhDfK2LUSguI7xUxaqUFxPeKGLXSAuJ7RYxaaQHxvSJGrbSA+F4Ro1ZaQHyviFErLSC+V8SolRYQ3yti1EoLiO8V+f9a6fNv+3WJ3E5f1hpZtRJvFLmdvqx1miHi+6Yva51miPi+6ctapxkivm/6stZphojvm76sdZoh4vumL2udZoj4vunLWqcZIr5v+rLWaYaI75u+rHWaIeL7pi9rnWaI+L7py1qnGSK+b/qy1mmGiO+bvqx1miHi+6Yva51miPi+6ctapxkivm/6stZphojvMeDZp0QQP1vkq3Ta3J7WOs0Q8X9P78WffFSs5cNlMJDh4uEB/OU9HiYGn0FBfFAQHxTEBwXxQUF8UBAfFMQHBfFBQXxQEB+UjuKlP5l6PP08/dqyHGreYadpF/FzjIt482GnaRfxc4yLePNhp2kX8XOMi3jzYadplws4QUF8UBAfFMQHBfFBQXxQEB8UxAcF8UFBfFC6ie/6IZHfj5z8jlnf3B7zPfLpzR/H7drxVZ9ddnUvW6njWMvOfP1X39weMp0O+aeR09prx3Gv+uyzqy3Fp2rMLvNNeYz4YtzOHYcU/7tu5p7zHXTE5/fq273jiOLzgPmOFT9m3GjifwecSPyAjhEfU/yodqvxO8BS33fctPxtLr779/GnN7fHHDTykHHT1XUBq+/jYTIQHxTEBwXxQUF8UBAfFMQHBfFBQXxQEB8UxAcF8UFBfFAQHxTEBwXxQUF8UBAfFMQHBfFBebT4VPx9+NRZ3fszjd0/NO7DQ6f1Yv1Fyf1TV2Xr3+mxe+ih03qRdp9I/3kp/B7H5UeVU/kh6VS8XlL5UF0zOQ+Ywjk78e//1pv1iVz9xsK6ZzblvX6hQc38M7ggFX9KZYe/nJJ3Xy3v8YfhyXnGLE5YVvFz8S+7h+Lz8lWRKn69ZW4eMIVzGsSvwbx5sDi5q58uCiZm/hlc8Hsqdih+9x6Qr8XzHj8RxSlbvVZvz9CXE7nyq+X3FjNn9bF51L561GQG86h99ajJQDuIDwrig4L4oCA+KIgPCuKDgvigID4oiA8K4oOC+KAgPiiIDwrig4L4oPwHbFLKeDtLpLgAAAAASUVORK5CYII=" alt="plot of chunk fig3"/></p>
 
 <pre><code class="r"># save plot
 png(file=&quot;Proj1_fig3.png&quot;, width=480, height=480)
 hist(daySum1$x, main=&quot;Distribution of Daily Total Steps\n(Missing Values Imputed)&quot;,
      xlab=&quot;Number of Steps&quot;, nclass=10)
-</code></pre>
-
-<pre><code>## Error in hist(daySum1$x, main = &quot;Distribution of Daily Total Steps\n(Missing Values Imputed)&quot;, : object &#39;daySum1&#39; not found
-</code></pre>
-
-<pre><code class="r">dev.off()
+dev.off()
 </code></pre>
 
 <pre><code>## RStudioGD 
@@ -421,54 +415,58 @@ str(F)
 </code></pre>
 
 <pre><code class="r">data1$F &lt;- F
+str(data1)
 </code></pre>
 
-<pre><code>## Error in data1$F &lt;- F: object of type &#39;closure&#39; is not subsettable
-</code></pre>
-
-<pre><code class="r">str(data1)
-</code></pre>
-
-<pre><code>## function (..., list = character(), package = NULL, lib.loc = NULL, 
-##     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)
+<pre><code>## &#39;data.frame&#39;:    17568 obs. of  4 variables:
+##  $ steps   : num  0.438 0.438 0.438 0.438 0.438 ...
+##  $ date    : Factor w/ 61 levels &quot;2012-10-01&quot;,&quot;2012-10-02&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ F       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
 </code></pre>
 
 <pre><code class="r">head(data1)
 </code></pre>
 
-<pre><code>##                                                                      
-## 1 function (..., list = character(), package = NULL, lib.loc = NULL, 
-## 2     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)            
-## 3 {                                                                  
-## 4     fileExt &lt;- function(x) {                                       
-## 5         db &lt;- grepl(&quot;\\\\.[^.]+\\\\.(gz|bz2|xz)$&quot;, x)              
-## 6         ans &lt;- sub(&quot;.*\\\\.&quot;, &quot;&quot;, x)
+<pre><code>##    steps       date interval     F
+## 1 0.4375 2012-10-01        0 FALSE
+## 2 0.4375 2012-10-01        5 FALSE
+## 3 0.4375 2012-10-01       10 FALSE
+## 4 0.4375 2012-10-01       15 FALSE
+## 5 0.4375 2012-10-01       20 FALSE
+## 6 0.4375 2012-10-01       25 FALSE
 </code></pre>
 
 <h3>5b. Make a panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo;) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</h3>
 
 <pre><code class="r">myMean2 &lt;- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )
+str(myMean2)
 </code></pre>
 
-<pre><code>## Error in terms.formula(formula, data = data): &#39;data&#39; argument is of the wrong type
-</code></pre>
-
-<pre><code class="r">str(myMean2)
-</code></pre>
-
-<pre><code>## Error in str(myMean2): object &#39;myMean2&#39; not found
+<pre><code>## &#39;data.frame&#39;:    288 obs. of  3 variables:
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ F       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ steps   : num  4.77 3.56 3.37 3.39 3.32 ...
 </code></pre>
 
 <pre><code class="r">head(myMean2)
 </code></pre>
 
-<pre><code>## Error in head(myMean2): object &#39;myMean2&#39; not found
+<pre><code>##   interval     F    steps
+## 1        0 FALSE 4.771933
+## 2        5 FALSE 3.555266
+## 3       10 FALSE 3.371933
+## 4       15 FALSE 3.388600
+## 5       20 FALSE 3.321933
+## 6       25 FALSE 5.105266
 </code></pre>
 
 <pre><code class="r">tapply(myMean2$steps, myMean2$F, summary)
 </code></pre>
 
-<pre><code>## Error in tapply(myMean2$steps, myMean2$F, summary): object &#39;myMean2&#39; not found
+<pre><code>## $`FALSE`
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.255   5.451  33.390  36.280  49.930 185.400
 </code></pre>
 
 <pre><code class="r"># plot on screen

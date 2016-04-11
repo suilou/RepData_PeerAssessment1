@@ -14,30 +14,18 @@ output:
 rm( list = ls() )
 raw_file<-"activity.zip"
 unzip(raw_file)
-data <- read.csv('data/activity.csv', header=TRUE, na.strings="NA")
-```
-
-```
-## Warning in file(file, "rt"): cannot open file 'data/activity.csv': No such
-## file or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
-```
-
-```r
+data <- read.csv('activity.csv', header=TRUE, na.strings="NA")
 head(data)
 ```
 
 ```
-##                                                                      
-## 1 function (..., list = character(), package = NULL, lib.loc = NULL, 
-## 2     verbose = getOption("verbose"), envir = .GlobalEnv)            
-## 3 {                                                                  
-## 4     fileExt <- function(x) {                                       
-## 5         db <- grepl("\\\\.[^.]+\\\\.(gz|bz2|xz)$", x)              
-## 6         ans <- sub(".*\\\\.", "", x)
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
 ```
 
 ```r
@@ -45,8 +33,10 @@ str(data)
 ```
 
 ```
-## function (..., list = character(), package = NULL, lib.loc = NULL, 
-##     verbose = getOption("verbose"), envir = .GlobalEnv)
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 ```
 
 ```r
@@ -55,7 +45,8 @@ summary(data$steps)
 ```
 
 ```
-## Error in data$steps: object of type 'closure' is not subsettable
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.00    0.00    0.00   37.38   12.00  806.00    2304
 ```
 
 ```r
@@ -63,7 +54,8 @@ summary(data$interval)
 ```
 
 ```
-## Error in data$interval: object of type 'closure' is not subsettable
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0   588.8  1178.0  1178.0  1766.0  2355.0
 ```
 
 ```r
@@ -71,7 +63,28 @@ summary(data$date)
 ```
 
 ```
-## Error in data$date: object of type 'closure' is not subsettable
+## 2012-10-01 2012-10-02 2012-10-03 2012-10-04 2012-10-05 2012-10-06 
+##        288        288        288        288        288        288 
+## 2012-10-07 2012-10-08 2012-10-09 2012-10-10 2012-10-11 2012-10-12 
+##        288        288        288        288        288        288 
+## 2012-10-13 2012-10-14 2012-10-15 2012-10-16 2012-10-17 2012-10-18 
+##        288        288        288        288        288        288 
+## 2012-10-19 2012-10-20 2012-10-21 2012-10-22 2012-10-23 2012-10-24 
+##        288        288        288        288        288        288 
+## 2012-10-25 2012-10-26 2012-10-27 2012-10-28 2012-10-29 2012-10-30 
+##        288        288        288        288        288        288 
+## 2012-10-31 2012-11-01 2012-11-02 2012-11-03 2012-11-04 2012-11-05 
+##        288        288        288        288        288        288 
+## 2012-11-06 2012-11-07 2012-11-08 2012-11-09 2012-11-10 2012-11-11 
+##        288        288        288        288        288        288 
+## 2012-11-12 2012-11-13 2012-11-14 2012-11-15 2012-11-16 2012-11-17 
+##        288        288        288        288        288        288 
+## 2012-11-18 2012-11-19 2012-11-20 2012-11-21 2012-11-22 2012-11-23 
+##        288        288        288        288        288        288 
+## 2012-11-24 2012-11-25 2012-11-26 2012-11-27 2012-11-28 2012-11-29 
+##        288        288        288        288        288        288 
+## 2012-11-30 
+##        288
 ```
 
 ## What is mean total number of steps taken per day?
@@ -82,18 +95,17 @@ summary(data$date)
 daySum <- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(date=data$date[!is.na(data$steps)]), 
                      FUN=sum)
-```
-
-```
-## Error in data$steps: object of type 'closure' is not subsettable
-```
-
-```r
 head(daySum)
 ```
 
 ```
-## Error in head(daySum): object 'daySum' not found
+##         date     x
+## 1 2012-10-02   126
+## 2 2012-10-03 11352
+## 3 2012-10-04 12116
+## 4 2012-10-05 13294
+## 5 2012-10-06 15420
+## 6 2012-10-07 11015
 ```
 
 ```r
@@ -101,7 +113,9 @@ str(daySum)
 ```
 
 ```
-## Error in str(daySum): object 'daySum' not found
+## 'data.frame':	53 obs. of  2 variables:
+##  $ date: Factor w/ 61 levels "2012-10-01","2012-10-02",..: 2 3 4 5 6 7 9 10 11 12 ...
+##  $ x   : int  126 11352 12116 13294 15420 11015 12811 9900 10304 17382 ...
 ```
 
 ### 2b. Make a histogram of the total number of steps taken each day
@@ -112,22 +126,13 @@ hist(daySum$x, main="Distribution of Daily Total Steps",
      xlab="Number of Steps", nclass=10)
 ```
 
-```
-## Error in hist(daySum$x, main = "Distribution of Daily Total Steps", xlab = "Number of Steps", : object 'daySum' not found
-```
+![plot of chunk fig1](figure/fig1-1.png)
 
 ```r
 # save plot
 png(file="Proj1_fig1.png", width=480, height=480)
 hist(daySum$x, main="Distribution of Daily Total Steps",
      xlab="Number of Steps", nclass=10)
-```
-
-```
-## Error in hist(daySum$x, main = "Distribution of Daily Total Steps", xlab = "Number of Steps", : object 'daySum' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -140,7 +145,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig1](figure/fig1-1.png)
+![plot of chunk fig1](figure/fig1-2.png)
 
 ```
 ## RStudioGD 
@@ -154,25 +159,19 @@ summary(daySum$x)
 ```
 
 ```
-## Error in summary(daySum$x): object 'daySum' not found
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    8841   10760   10770   13290   21190
 ```
 
 ```r
 # Mean = 9354 
 # Median = 10500
 dailyMeanSteps <- mean(daySum$x, rm.na=TRUE)
-```
-
-```
-## Error in mean(daySum$x, rm.na = TRUE): object 'daySum' not found
-```
-
-```r
 dailyMeanSteps
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'dailyMeanSteps' not found
+## [1] 10766.19
 ```
 
 ```r
@@ -207,7 +206,8 @@ summary(data$interval)
 ```
 
 ```
-## Error in data$interval: object of type 'closure' is not subsettable
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0   588.8  1178.0  1178.0  1766.0  2355.0
 ```
 
 ```r
@@ -215,25 +215,25 @@ summary(data$steps)
 ```
 
 ```
-## Error in data$steps: object of type 'closure' is not subsettable
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.00    0.00    0.00   37.38   12.00  806.00    2304
 ```
 
 ```r
 myMean <- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(interval=data$interval[!is.na(data$steps)]), 
                      FUN=mean )
-```
-
-```
-## Error in data$steps: object of type 'closure' is not subsettable
-```
-
-```r
 head(myMean)
 ```
 
 ```
-## Error in head(myMean): object 'myMean' not found
+##   interval         x
+## 1        0 1.7169811
+## 2        5 0.3396226
+## 3       10 0.1320755
+## 4       15 0.1509434
+## 5       20 0.0754717
+## 6       25 2.0943396
 ```
 
 ```r
@@ -241,7 +241,9 @@ str(myMean)
 ```
 
 ```
-## Error in str(myMean): object 'myMean' not found
+## 'data.frame':	288 obs. of  2 variables:
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ x       : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
 ```
 
 ```r
@@ -249,7 +251,8 @@ summary(myMean$x)
 ```
 
 ```
-## Error in summary(myMean$x): object 'myMean' not found
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   2.486  34.110  37.380  52.830 206.200
 ```
 
 #### plot
@@ -261,9 +264,7 @@ plot(x=myMean$interval, y=myMean$x, type="l",
      xlab = "Interval", ylab="Mean Steps")
 ```
 
-```
-## Error in plot(x = myMean$interval, y = myMean$x, type = "l", main = "Mean Number of Steps in 5-Minutes", : object 'myMean' not found
-```
+![plot of chunk fig2](figure/fig2-1.png)
 
 ```r
 # save plot
@@ -271,13 +272,6 @@ png(file="Proj1_fig2.png", width=480, height=480)
 plot(x=myMean$interval, y=myMean$x, type="l", 
      main="Mean Number of Steps in 5-Minutes", 
      xlab = "Interval", ylab="Mean Steps")
-```
-
-```
-## Error in plot(x = myMean$interval, y = myMean$x, type = "l", main = "Mean Number of Steps in 5-Minutes", : object 'myMean' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -290,7 +284,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig2](figure/fig2-1.png)
+![plot of chunk fig2](figure/fig2-2.png)
 
 ```
 ## RStudioGD 
@@ -301,18 +295,11 @@ dev.cur()
 
 ```r
 myMax <- myMean$interval[myMean$x==max(myMean$x)]
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'myMean' not found
-```
-
-```r
 myMax
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'myMax' not found
+## [1] 835
 ```
 
 ```r
@@ -329,7 +316,7 @@ length(unique(data$date)) == max(as.Date(data$date))-min(as.Date(data$date))+1
 ```
 
 ```
-## Error in data$date: object of type 'closure' is not subsettable
+## [1] TRUE
 ```
 
 ```r
@@ -338,7 +325,8 @@ summary(data$interval)
 ```
 
 ```
-## Error in data$interval: object of type 'closure' is not subsettable
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0   588.8  1178.0  1178.0  1766.0  2355.0
 ```
 
 ```r
@@ -347,7 +335,7 @@ length(data$interval) == length(unique(data$date)) * 24 * 12
 ```
 
 ```
-## Error in data$interval: object of type 'closure' is not subsettable
+## [1] TRUE
 ```
 
 ```r
@@ -357,7 +345,7 @@ sum(is.na(data$steps))
 ```
 
 ```
-## Error in data$steps: object of type 'closure' is not subsettable
+## [1] 2304
 ```
 
 ```r
@@ -371,27 +359,14 @@ sum(is.na(data$steps))
 
 ```r
 dMean <- rep(daySum$x/(24*12), each=24*12)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'daySum' not found
-```
-
-```r
 data1 <- data
 data1$steps[is.na(data$steps)] <- dMean[is.na(data$steps)]
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'dMean' not found
-```
-
-```r
 summary(data1$steps)
 ```
 
 ```
-## Error in data1$steps: object of type 'closure' is not subsettable
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.00    0.00    0.00   36.28   25.25  806.00     288
 ```
 
 ### 4d. Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
@@ -400,18 +375,17 @@ summary(data1$steps)
 daySum1 <- aggregate( x=data1$steps, 
                      by=list(date=data1$date), 
                      FUN=sum )
-```
-
-```
-## Error in data1$steps: object of type 'closure' is not subsettable
-```
-
-```r
 head(daySum1)
 ```
 
 ```
-## Error in head(daySum1): object 'daySum1' not found
+##         date     x
+## 1 2012-10-01   126
+## 2 2012-10-02   126
+## 3 2012-10-03 11352
+## 4 2012-10-04 12116
+## 5 2012-10-05 13294
+## 6 2012-10-06 15420
 ```
 
 ```r
@@ -419,7 +393,9 @@ str(daySum1)
 ```
 
 ```
-## Error in str(daySum1): object 'daySum1' not found
+## 'data.frame':	61 obs. of  2 variables:
+##  $ date: Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ x   : num  126 126 11352 12116 13294 ...
 ```
 
 ```r
@@ -427,7 +403,8 @@ summary(daySum1$x)
 ```
 
 ```
-## Error in summary(daySum1$x): object 'daySum1' not found
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##      41    8704   10590   10450   12990   21190       1
 ```
 
 ```r
@@ -436,22 +413,13 @@ hist(daySum1$x, main="Distribution of Daily Total Steps\n(Missing Values Imputed
      xlab="Number of Steps", nclass=10)
 ```
 
-```
-## Error in hist(daySum1$x, main = "Distribution of Daily Total Steps\n(Missing Values Imputed)", : object 'daySum1' not found
-```
+![plot of chunk fig3](figure/fig3-1.png)
 
 ```r
 # save plot
 png(file="Proj1_fig3.png", width=480, height=480)
 hist(daySum1$x, main="Distribution of Daily Total Steps\n(Missing Values Imputed)",
      xlab="Number of Steps", nclass=10)
-```
-
-```
-## Error in hist(daySum1$x, main = "Distribution of Daily Total Steps\n(Missing Values Imputed)", : object 'daySum1' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -464,7 +432,7 @@ dev.off()
 dev.cur()
 ```
 
-![plot of chunk fig3](figure/fig3-1.png)
+![plot of chunk fig3](figure/fig3-2.png)
 
 ```
 ## RStudioGD 
@@ -542,19 +510,15 @@ head(F)
 
 ```r
 data1$F <- F
-```
-
-```
-## Error in data1$F <- F: object of type 'closure' is not subsettable
-```
-
-```r
 str(data1)
 ```
 
 ```
-## function (..., list = character(), package = NULL, lib.loc = NULL, 
-##     verbose = getOption("verbose"), envir = .GlobalEnv)
+## 'data.frame':	17568 obs. of  4 variables:
+##  $ steps   : num  0.438 0.438 0.438 0.438 0.438 ...
+##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ F       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
 ```
 
 ```r
@@ -562,31 +526,27 @@ head(data1)
 ```
 
 ```
-##                                                                      
-## 1 function (..., list = character(), package = NULL, lib.loc = NULL, 
-## 2     verbose = getOption("verbose"), envir = .GlobalEnv)            
-## 3 {                                                                  
-## 4     fileExt <- function(x) {                                       
-## 5         db <- grepl("\\\\.[^.]+\\\\.(gz|bz2|xz)$", x)              
-## 6         ans <- sub(".*\\\\.", "", x)
+##    steps       date interval     F
+## 1 0.4375 2012-10-01        0 FALSE
+## 2 0.4375 2012-10-01        5 FALSE
+## 3 0.4375 2012-10-01       10 FALSE
+## 4 0.4375 2012-10-01       15 FALSE
+## 5 0.4375 2012-10-01       20 FALSE
+## 6 0.4375 2012-10-01       25 FALSE
 ```
 
 ### 5b. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
 
 ```r
 myMean2 <- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )
-```
-
-```
-## Error in terms.formula(formula, data = data): 'data' argument is of the wrong type
-```
-
-```r
 str(myMean2)
 ```
 
 ```
-## Error in str(myMean2): object 'myMean2' not found
+## 'data.frame':	288 obs. of  3 variables:
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ F       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ steps   : num  4.77 3.56 3.37 3.39 3.32 ...
 ```
 
 ```r
@@ -594,7 +554,13 @@ head(myMean2)
 ```
 
 ```
-## Error in head(myMean2): object 'myMean2' not found
+##   interval     F    steps
+## 1        0 FALSE 4.771933
+## 2        5 FALSE 3.555266
+## 3       10 FALSE 3.371933
+## 4       15 FALSE 3.388600
+## 5       20 FALSE 3.321933
+## 6       25 FALSE 5.105266
 ```
 
 ```r
@@ -602,7 +568,9 @@ tapply(myMean2$steps, myMean2$F, summary)
 ```
 
 ```
-## Error in tapply(myMean2$steps, myMean2$F, summary): object 'myMean2' not found
+## $`FALSE`
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.255   5.451  33.390  36.280  49.930 185.400
 ```
 
 ```r
