@@ -142,16 +142,11 @@ dailyMeanSteps
 </code></pre>
 
 <pre><code class="r"># Mean = 9354.23
-dailyMedianSteps &lt;- median(daySum$x, rm.na=TRUE)
+dailyMedianSteps &lt;- median(daySum$x)
+dailyMedianSteps
 </code></pre>
 
-<pre><code>## Error in median(daySum$x, rm.na = TRUE): unused argument (rm.na = TRUE)
-</code></pre>
-
-<pre><code class="r">dailyMedianSteps
-</code></pre>
-
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;dailyMedianSteps&#39; not found
+<pre><code>## [1] 10765
 </code></pre>
 
 <pre><code class="r"># Median = 10395

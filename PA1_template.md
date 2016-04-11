@@ -176,19 +176,12 @@ dailyMeanSteps
 
 ```r
 # Mean = 9354.23
-dailyMedianSteps <- median(daySum$x, rm.na=TRUE)
-```
-
-```
-## Error in median(daySum$x, rm.na = TRUE): unused argument (rm.na = TRUE)
-```
-
-```r
+dailyMedianSteps <- median(daySum$x)
 dailyMedianSteps
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'dailyMedianSteps' not found
+## [1] 10765
 ```
 
 ```r

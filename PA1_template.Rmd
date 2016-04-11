@@ -54,7 +54,7 @@ summary(daySum$x)
 dailyMeanSteps <- mean(daySum$x, rm.na=TRUE)
 dailyMeanSteps
 # Mean = 9354.23
-dailyMedianSteps <- median(daySum$x, rm.na=TRUE)
+dailyMedianSteps <- median(daySum$x)
 dailyMedianSteps
 # Median = 10395
 ```
