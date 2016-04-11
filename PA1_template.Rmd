@@ -34,7 +34,7 @@ str(daySum)
 ```
 
 ### 2b. Make a histogram of the total number of steps taken each day
-```{r fig1, echo=TRUE}
+```{r fig1, fig.width=8, fig.height=6, echo=TRUE}
 # plot on screen
 hist(daySum$x, main="Distribution of Daily Total Steps",
      xlab="Number of Steps", nclass=10)
@@ -76,7 +76,7 @@ summary(myMean$x)
 ```
 
 #### plot
-```{r fig2, echo=TRUE}
+```{r fig2, fig.width=8, fig.height=6, echo=TRUE}
 # plot on screen
 plot(x=myMean$interval, y=myMean$x, type="l", 
      main="Mean Number of Steps in 5-Minutes", 
@@ -126,7 +126,7 @@ summary(data1$steps)
 ```
 
 ### 4d. Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
-```{r fig3, echo=TRUE}
+```{r fig3, fig.width=8, fig.height=6, echo=TRUE}
 daySum1 <- aggregate( x=data1$steps, 
                      by=list(date=data1$date), 
                      FUN=sum )
@@ -170,7 +170,7 @@ head(data1)
 ```
 
 ### 5b. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-```{r fig4, echo=TRUE}
+```{r fig4, fig.width=8, fig.height=6, echo=TRUE}
 myMean2 <- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )
 str(myMean2)
 head(myMean2)
