@@ -1,136 +1,266 @@
 <h2>Loading and preprocessing the data</h2>
 
-<p>rm( list = ls() )</p>
+<pre><code class="r">rm( list = ls() )
+data &lt;- read.csv(&#39;data/activity.csv&#39;)
+</code></pre>
 
-<p>data &lt;- read.csv(&#39;data/activity.csv&#39;)</p>
+<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open file &#39;data/activity.csv&#39;: No such
+## file or directory
+</code></pre>
 
-<p>head(data)</p>
+<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection
+</code></pre>
 
-<p>str(data)</p>
+<pre><code class="r">head(data)
+</code></pre>
 
-<h4>check missing values</h4>
+<pre><code>##                                                                      
+## 1 function (..., list = character(), package = NULL, lib.loc = NULL, 
+## 2     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)            
+## 3 {                                                                  
+## 4     fileExt &lt;- function(x) {                                       
+## 5         db &lt;- grepl(&quot;\\\\.[^.]+\\\\.(gz|bz2|xz)$&quot;, x)              
+## 6         ans &lt;- sub(&quot;.*\\\\.&quot;, &quot;&quot;, x)
+</code></pre>
 
-<p>summary(data$steps) </p>
+<pre><code class="r">str(data)
+</code></pre>
 
-<p>summary(data$interval) </p>
+<pre><code>## function (..., list = character(), package = NULL, lib.loc = NULL, 
+##     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)
+</code></pre>
 
-<p>summary(data$date) </p>
+<pre><code class="r"># check missing values 
+summary(data$steps)
+</code></pre>
+
+<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">summary(data$interval)
+</code></pre>
+
+<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">summary(data$date) 
+</code></pre>
+
+<pre><code>## Error in data$date: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
 <h2>What is mean total number of steps taken per day?</h2>
 
 <h3>2a. Calculate the total number of steps taken per day</h3>
 
-<p>daySum &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
+<pre><code class="r">daySum &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(date=data$date[!is.na(data$steps)]), 
-                     FUN=sum)</p>
+                     FUN=sum)
+</code></pre>
 
-<p>head(daySum)</p>
+<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
-<p>str(daySum)</p>
+<pre><code class="r">head(daySum)
+</code></pre>
+
+<pre><code>## Error in head(daySum): object &#39;daySum&#39; not found
+</code></pre>
+
+<pre><code class="r">str(daySum)
+</code></pre>
+
+<pre><code>## Error in str(daySum): object &#39;daySum&#39; not found
+</code></pre>
 
 <h3>2b. Make a histogram of the total number of steps taken each day</h3>
 
-<h4>plot on screen</h4>
+<pre><code class="r"># plot on screen
+hist(daySum$x, main=&quot;Distribution of Daily Total Steps&quot;,
+     xlab=&quot;Number of Steps&quot;, nclass=10)
+</code></pre>
 
-<p>hist(daySum$x, main=&ldquo;Distribution of Daily Total Steps&rdquo;,
-     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
+<pre><code>## Error in hist(daySum$x, main = &quot;Distribution of Daily Total Steps&quot;, xlab = &quot;Number of Steps&quot;, : object &#39;daySum&#39; not found
+</code></pre>
 
-<h4>save plot</h4>
+<pre><code class="r"># save plot
+png(file=&quot;Proj1_fig1.png&quot;, width=480, height=480)
+hist(daySum$x, main=&quot;Distribution of Daily Total Steps&quot;,
+     xlab=&quot;Number of Steps&quot;, nclass=10)
+</code></pre>
 
-<p>png(file=&ldquo;Proj1_fig1.png&rdquo;, width=480, height=480)</p>
+<pre><code>## Error in hist(daySum$x, main = &quot;Distribution of Daily Total Steps&quot;, xlab = &quot;Number of Steps&quot;, : object &#39;daySum&#39; not found
+</code></pre>
 
-<p>hist(daySum$x, main=&ldquo;Distribution of Daily Total Steps&rdquo;,
-     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
+<pre><code class="r">dev.off()
+</code></pre>
 
-<p>dev.off()</p>
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
 
-<p>dev.cur()</p>
+<pre><code class="r">dev.cur()
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk fig1"/></p>
+
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
 
 <h3>2c. Calculate and report the mean and median of the total number of steps taken per day</h3>
 
-<p>summary(daySum$x) </p>
+<pre><code class="r">summary(daySum$x) 
+</code></pre>
 
-<h4>Mean = 9354</h4>
+<pre><code>## Error in summary(daySum$x): object &#39;daySum&#39; not found
+</code></pre>
 
-<h4>Median = 10500</h4>
+<pre><code class="r"># Mean = 9354 
+# Median = 10500
+dailyMeanSteps &lt;- mean(daySum$x, rm.na=TRUE)
+</code></pre>
 
-<p>dailyMeanSteps &lt;- mean(daySum$x, rm.na=TRUE)</p>
+<pre><code>## Error in mean(daySum$x, rm.na = TRUE): object &#39;daySum&#39; not found
+</code></pre>
 
-<p>dailyMeanSteps</p>
+<pre><code class="r"># Mean = 9354.23
+dailyMedianSteps &lt;- median(daySum$x, rm.na=TRUE)
+</code></pre>
 
-<h4>Mean = 9354.23</h4>
+<pre><code>## Error in median(daySum$x, rm.na = TRUE): unused argument (rm.na = TRUE)
+</code></pre>
 
-<p>dailyMedianSteps &lt;- median(daySum$x, rm.na=TRUE)</p>
+<pre><code class="r"># Median = 10395
+</code></pre>
 
-<p>dailyMedianSteps</p>
-
-<h4>Median = 10395</h4>
-
-<h3>Observation: Mean and median are slightly different from &ldquo;summary&rdquo; output. Why?</h3>
+<h4>Observation: Mean and median are slightly different from &ldquo;summary&rdquo; output. Why?</h4>
 
 <h2>What is the average daily activity pattern?</h2>
 
 <h3>3a. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</h3>
 
-<p>summary(data$interval)</p>
+<pre><code class="r">summary(data$interval)
+</code></pre>
 
-<p>summary(data$steps)</p>
+<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
-<p>myMean &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
+<pre><code class="r">summary(data$steps)
+</code></pre>
+
+<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">myMean &lt;- aggregate( x=data$steps[!is.na(data$steps)], 
                      by=list(interval=data$interval[!is.na(data$steps)]), 
-                     FUN=mean )</p>
+                     FUN=mean )
+</code></pre>
 
-<p>head(myMean)</p>
+<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
-<p>str(myMean)</p>
+<pre><code class="r">head(myMean)
+</code></pre>
 
-<p>summary(myMean$x)</p>
+<pre><code>## Error in head(myMean): object &#39;myMean&#39; not found
+</code></pre>
 
-<h4>plot on screen</h4>
+<pre><code class="r">str(myMean)
+</code></pre>
 
-<p>plot(x=myMean$interval, y=myMean$x, type=&ldquo;l&rdquo;, 
-     main=&ldquo;Mean Number of Steps in 5-Minutes&rdquo;, 
-     xlab = &ldquo;Interval&rdquo;, ylab=&ldquo;Mean Steps&rdquo;)</p>
+<pre><code>## Error in str(myMean): object &#39;myMean&#39; not found
+</code></pre>
 
-<h4>save plot</h4>
+<pre><code class="r">summary(myMean$x)
+</code></pre>
 
-<p>png(file=&ldquo;Proj1_fig2.png&rdquo;, width=480, height=480)</p>
+<pre><code>## Error in summary(myMean$x): object &#39;myMean&#39; not found
+</code></pre>
 
-<p>plot(x=myMean$interval, y=myMean$x, type=&ldquo;l&rdquo;, 
-     main=&ldquo;Mean Number of Steps in 5-Minutes&rdquo;, 
-     xlab = &ldquo;Interval&rdquo;, ylab=&ldquo;Mean Steps&rdquo;)</p>
+<h4>plot</h4>
 
-<p>dev.off()</p>
+<pre><code class="r"># plot on screen
+plot(x=myMean$interval, y=myMean$x, type=&quot;l&quot;, 
+     main=&quot;Mean Number of Steps in 5-Minutes&quot;, 
+     xlab = &quot;Interval&quot;, ylab=&quot;Mean Steps&quot;)
+</code></pre>
 
-<p>dev.cur()</p>
+<pre><code>## Error in plot(x = myMean$interval, y = myMean$x, type = &quot;l&quot;, main = &quot;Mean Number of Steps in 5-Minutes&quot;, : object &#39;myMean&#39; not found
+</code></pre>
+
+<pre><code class="r"># save plot
+png(file=&quot;Proj1_fig2.png&quot;, width=480, height=480)
+plot(x=myMean$interval, y=myMean$x, type=&quot;l&quot;, 
+     main=&quot;Mean Number of Steps in 5-Minutes&quot;, 
+     xlab = &quot;Interval&quot;, ylab=&quot;Mean Steps&quot;)
+</code></pre>
+
+<pre><code>## Error in plot(x = myMean$interval, y = myMean$x, type = &quot;l&quot;, main = &quot;Mean Number of Steps in 5-Minutes&quot;, : object &#39;myMean&#39; not found
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
+
+<pre><code class="r">dev.cur()
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk fig2"/></p>
+
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
 
 <h3>3b. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h3>
 
-<p>myMean$interval[myMean$x==max(myMean$x)]</p>
+<pre><code class="r">myMean$interval[myMean$x==max(myMean$x)]
+</code></pre>
 
-<h4>Max = 835</h4>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;myMean&#39; not found
+</code></pre>
+
+<pre><code class="r"># Max = 835
+</code></pre>
 
 <h2>Imputing missing values</h2>
 
 <h3>4a. Calculate and report the total number of missing values in the dataset</h3>
 
-<h4>check whether there are any dates missing (no)</h4>
+<pre><code class="r"># check whether there are any dates missing (no)
+length(unique(data$date)) == max(as.Date(data$date))-min(as.Date(data$date))+1
+</code></pre>
 
-<p>length(unique(data$date)) == max(as.Date(data$date))-min(as.Date(data$date))+1</p>
+<pre><code>## Error in data$date: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
-<h4>check whether interval has missing values (no)</h4>
+<pre><code class="r"># check whether interval has missing values (no)
+summary(data$interval)
+</code></pre>
 
-<p>summary(data$interval) </p>
+<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
-<h4>check whether all intervals are present (yes, there are 2304 NA values)</h4>
+<pre><code class="r"># check whether all intervals are present (yes, there are 2304 NA values)
+length(data$interval) == length(unique(data$date)) * 24 * 12
+</code></pre>
 
-<p>length(data$interval) == length(unique(data$date)) * 24 * 12</p>
+<pre><code>## Error in data$interval: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
-<h4>Therefore, number of missing rows = number of missing values in data$steps</h4>
+<pre><code class="r"># Therefore, number of missing rows = number of missing values in data$steps
 
-<p>sum(is.na(data$steps))</p>
+sum(is.na(data$steps))
+</code></pre>
 
-<h4>SumMissing = 2304</h4>
+<pre><code>## Error in data$steps: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r"># SumMissing = 2304
+</code></pre>
 
 <h3>4b. Devise a strategy for filling in all of the missing values in the dataset.</h3>
 
@@ -138,41 +268,85 @@
 
 <h3>4c. Create a new dataset that is equal to the original dataset but with the missing data filled in.</h3>
 
-<p>dMean &lt;- rep(daySum$x/(24*12), each=24*12)</p>
+<pre><code class="r">dMean &lt;- rep(daySum$x/(24*12), each=24*12)
+</code></pre>
 
-<p>data1 &lt;- data</p>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;daySum&#39; not found
+</code></pre>
 
-<p>data1$steps[is.na(data$steps)] &lt;- dMean[is.na(data$steps)]</p>
+<pre><code class="r">data1 &lt;- data
+data1$steps[is.na(data$steps)] &lt;- dMean[is.na(data$steps)]
+</code></pre>
 
-<p>summary(data1$steps)</p>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;dMean&#39; not found
+</code></pre>
+
+<pre><code class="r">summary(data1$steps)
+</code></pre>
+
+<pre><code>## Error in data1$steps: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
 <h3>4d. Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</h3>
 
-<p>daySum1 &lt;- aggregate( x=data1$steps, 
+<pre><code class="r">daySum1 &lt;- aggregate( x=data1$steps, 
                      by=list(date=data1$date), 
-                     FUN=sum )</p>
+                     FUN=sum )
+</code></pre>
 
-<p>head(daySum1)</p>
+<pre><code>## Error in data1$steps: object of type &#39;closure&#39; is not subsettable
+</code></pre>
 
-<p>str(daySum1)</p>
+<pre><code class="r">head(daySum1)
+</code></pre>
 
-<p>summary(daySum1$x)</p>
+<pre><code>## Error in head(daySum1): object &#39;daySum1&#39; not found
+</code></pre>
 
-<h4>plot on screen</h4>
+<pre><code class="r">str(daySum1)
+</code></pre>
 
-<p>hist(daySum1$x, main=&ldquo;Distribution of Daily Total Steps\n(Missing Values Imputed)&rdquo;,
-     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
+<pre><code>## Error in str(daySum1): object &#39;daySum1&#39; not found
+</code></pre>
 
-<h4>save plot</h4>
+<pre><code class="r">summary(daySum1$x)
+</code></pre>
 
-<p>png(file=&ldquo;Proj1_fig3.png&rdquo;, width=480, height=480)</p>
+<pre><code>## Error in summary(daySum1$x): object &#39;daySum1&#39; not found
+</code></pre>
 
-<p>hist(daySum1$x, main=&ldquo;Distribution of Daily Total Steps\n(Missing Values Imputed)&rdquo;,
-     xlab=&ldquo;Number of Steps&rdquo;, nclass=10)</p>
+<pre><code class="r"># plot on screen
+hist(daySum1$x, main=&quot;Distribution of Daily Total Steps\n(Missing Values Imputed)&quot;,
+     xlab=&quot;Number of Steps&quot;, nclass=10)
+</code></pre>
 
-<p>dev.off()</p>
+<pre><code>## Error in hist(daySum1$x, main = &quot;Distribution of Daily Total Steps\n(Missing Values Imputed)&quot;, : object &#39;daySum1&#39; not found
+</code></pre>
 
-<p>dev.cur()</p>
+<pre><code class="r"># save plot
+png(file=&quot;Proj1_fig3.png&quot;, width=480, height=480)
+hist(daySum1$x, main=&quot;Distribution of Daily Total Steps\n(Missing Values Imputed)&quot;,
+     xlab=&quot;Number of Steps&quot;, nclass=10)
+</code></pre>
+
+<pre><code>## Error in hist(daySum1$x, main = &quot;Distribution of Daily Total Steps\n(Missing Values Imputed)&quot;, : object &#39;daySum1&#39; not found
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
+
+<pre><code class="r">dev.cur()
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk fig3"/></p>
+
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
 
 <h3>It appears that imputation of missing values with mean steps of the day has no visible effect on the distribution, nor the mean and median. This is probably due to the nature of the missing values in the dataset, which likely occur only on certain days. Note that this result is strategy-dependent.</h3>
 
@@ -180,62 +354,140 @@
 
 <h3>5a. Create a new factor variable in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day.</h3>
 
-<p>tf = is.member(weekdays(as.Date(data1$date)), c(&ldquo;Monday&rdquo;,&ldquo;Tuesday&rdquo;, 
-                                            &ldquo;Wednesday&rdquo;,&ldquo;Thursday&rdquo;,&ldquo;Friday&rdquo;) )</p>
+<pre><code class="r">tf = is.member(weekdays(as.Date(data1$date)), c(&quot;Monday&quot;,&quot;Tuesday&quot;, 
+                                            &quot;Wednesday&quot;,&quot;Thursday&quot;,&quot;Friday&quot;) )
+</code></pre>
 
-<p>table(tf)</p>
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;is.member&quot;
+</code></pre>
 
-<p>str(tf)</p>
+<pre><code class="r">table(tf)
+</code></pre>
 
-<p>sum(tf(tf==1))</p>
+<pre><code>## Error in table(tf): object &#39;tf&#39; not found
+</code></pre>
 
-<p>F &lt;- factor(tf)</p>
+<pre><code class="r">str(tf)
+</code></pre>
 
-<p>levels(F)[levels(F)==&ldquo;FALSE&rdquo;] &lt;- &ldquo;weekend&rdquo;</p>
+<pre><code>## Error in str(tf): object &#39;tf&#39; not found
+</code></pre>
 
-<p>levels(F)[levels(F)==&ldquo;TRUE&rdquo;] &lt;- &ldquo;weekday&rdquo;</p>
+<pre><code class="r">sum(tf(tf==1))
+</code></pre>
 
-<p>str(F)</p>
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;tf&quot;
+</code></pre>
 
-<p>head(F)</p>
+<pre><code class="r">F &lt;- factor(tf)
+</code></pre>
 
-<p>data1$F &lt;- F</p>
+<pre><code>## Error in factor(tf): object &#39;tf&#39; not found
+</code></pre>
 
-<p>str(data1)</p>
+<pre><code class="r">levels(F)[levels(F)==&quot;FALSE&quot;] &lt;- &quot;weekend&quot;
+levels(F)[levels(F)==&quot;TRUE&quot;] &lt;- &quot;weekday&quot;
+str(F)
+</code></pre>
 
-<p>head(data1)</p>
+<pre><code>##  atomic [1:1] FALSE
+##  - attr(*, &quot;levels&quot;)= chr(0)
+</code></pre>
+
+<pre><code class="r">head(F)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">data1$F &lt;- F
+</code></pre>
+
+<pre><code>## Error in data1$F &lt;- F: object of type &#39;closure&#39; is not subsettable
+</code></pre>
+
+<pre><code class="r">str(data1)
+</code></pre>
+
+<pre><code>## function (..., list = character(), package = NULL, lib.loc = NULL, 
+##     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)
+</code></pre>
+
+<pre><code class="r">head(data1)
+</code></pre>
+
+<pre><code>##                                                                      
+## 1 function (..., list = character(), package = NULL, lib.loc = NULL, 
+## 2     verbose = getOption(&quot;verbose&quot;), envir = .GlobalEnv)            
+## 3 {                                                                  
+## 4     fileExt &lt;- function(x) {                                       
+## 5         db &lt;- grepl(&quot;\\\\.[^.]+\\\\.(gz|bz2|xz)$&quot;, x)              
+## 6         ans &lt;- sub(&quot;.*\\\\.&quot;, &quot;&quot;, x)
+</code></pre>
 
 <h3>5b. Make a panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo;) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</h3>
 
-<p>myMean2 &lt;- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )</p>
+<pre><code class="r">myMean2 &lt;- aggregate( steps ~ interval + F, data=data1, mean, na.rm=TRUE )
+</code></pre>
 
-<p>str(myMean2)</p>
+<pre><code>## Error in terms.formula(formula, data = data): &#39;data&#39; argument is of the wrong type
+</code></pre>
 
-<p>head(myMean2)</p>
+<pre><code class="r">str(myMean2)
+</code></pre>
 
-<p>tapply(myMean2$steps, myMean2$F, summary)</p>
+<pre><code>## Error in str(myMean2): object &#39;myMean2&#39; not found
+</code></pre>
 
-<h4>plot on screen</h4>
+<pre><code class="r">head(myMean2)
+</code></pre>
 
-<p>library(ggplot2)</p>
+<pre><code>## Error in head(myMean2): object &#39;myMean2&#39; not found
+</code></pre>
 
-<p>ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
-  labs(x=&ldquo;Interval&rdquo;)+labs(y=&ldquo;Mean steps&rdquo;)+
-  labs(title=&ldquo;Activity Patterns&rdquo;)+
-  facet_wrap(~F, ncol=1)</p>
+<pre><code class="r">tapply(myMean2$steps, myMean2$F, summary)
+</code></pre>
 
-<h4>save plot</h4>
+<pre><code>## Error in tapply(myMean2$steps, myMean2$F, summary): object &#39;myMean2&#39; not found
+</code></pre>
 
-<p>png(file=&ldquo;Proj1_fig4.png&rdquo;, width=480, height=480)</p>
+<pre><code class="r"># plot on screen
+library(ggplot2)
+ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+  labs(x=&quot;Interval&quot;)+labs(y=&quot;Mean steps&quot;)+
+  labs(title=&quot;Activity Patterns&quot;)+
+  facet_wrap(~F, ncol=1)
+</code></pre>
 
-<p>ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
-  labs(x=&ldquo;Interval&rdquo;)+labs(y=&ldquo;Mean steps&rdquo;)+
-  labs(title=&ldquo;Activity Patterns&rdquo;)+
-  facet_wrap(~F, ncol=1)</p>
+<pre><code>## Error in ggplot(weekData, aes(interval, steps)): object &#39;weekData&#39; not found
+</code></pre>
 
-<p>dev.off()</p>
+<pre><code class="r"># save plot
+png(file=&quot;Proj1_fig4.png&quot;, width=480, height=480)
+ggplot(weekData, aes(interval,steps))+geom_line()+facet_grid(F ~.)+
+  labs(x=&quot;Interval&quot;)+labs(y=&quot;Mean steps&quot;)+
+  labs(title=&quot;Activity Patterns&quot;)+
+  facet_wrap(~F, ncol=1)
+</code></pre>
 
-<p>dev.cur()</p>
+<pre><code>## Error in ggplot(weekData, aes(interval, steps)): object &#39;weekData&#39; not found
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
+
+<pre><code class="r">dev.cur()
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk fig4"/></p>
+
+<pre><code>## RStudioGD 
+##         2
+</code></pre>
 
 <h3>It appears that while the general patterns are similar for weekends and weekdays, trend for weekdays contains more fine structures than that for weekends.</h3>
 
