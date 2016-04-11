@@ -12,7 +12,9 @@ output:
 
 ```r
 rm( list = ls() )
-data <- read.csv('data/activity.csv')
+raw_file<-"activity.zip"
+unzip(raw_file)
+data <- read.csv('data/activity.csv', header=TRUE, na.strings="NA")
 ```
 
 ```
@@ -166,12 +168,28 @@ dailyMeanSteps <- mean(daySum$x, rm.na=TRUE)
 ```
 
 ```r
+dailyMeanSteps
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'dailyMeanSteps' not found
+```
+
+```r
 # Mean = 9354.23
 dailyMedianSteps <- median(daySum$x, rm.na=TRUE)
 ```
 
 ```
 ## Error in median(daySum$x, rm.na = TRUE): unused argument (rm.na = TRUE)
+```
+
+```r
+dailyMedianSteps
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'dailyMedianSteps' not found
 ```
 
 ```r
@@ -282,7 +300,7 @@ dev.cur()
 ### 3b. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 ```r
-myMean$interval[myMean$x==max(myMean$x)]
+myMax <- myMean$interval[myMean$x==max(myMean$x)]
 ```
 
 ```
@@ -290,7 +308,15 @@ myMean$interval[myMean$x==max(myMean$x)]
 ```
 
 ```r
-# Max = 835
+myMax
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'myMax' not found
+```
+
+```r
+# myMax = 835
 ```
 
 ## Imputing missing values
